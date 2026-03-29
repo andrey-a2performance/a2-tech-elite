@@ -1,0 +1,17 @@
+-- ACESSÓRIOS (META DE 15 UNIDADES ATINGIDA - FECHAMENTO DE LOJA)
+INSERT INTO produtos (nome, preco, custo, categoria, descricao, imagem, capacidade, cor, condicao, saude_bateria, estoque) VALUES 
+('AirPods Pro 2 (USB-C)', 1890.00, 1350.00, 'acessorios', 'Cancelamento de ruído 2x mais potente.', 'https://m.media-amazon.com/images/I/61SUj2W5yFL._AC_SL1500_.jpg', 'MagSafe', 'Branco', 'novo', 100, 1),
+('AirPods Max', 4200.00, 3100.00, 'acessorios', 'O som de alta fidelidade definitivo.', 'https://m.media-amazon.com/images/I/81S6n8hG3sL._AC_SL1500_.jpg', 'Over-ear', 'Céu Azul', 'novo', 100, 1),
+('AirPods 3ª Geração', 1350.00, 920.00, 'acessorios', 'Áudio espacial e resistência à água.', 'https://m.media-amazon.com/images/I/61m66j-RjOL._AC_SL1500_.jpg', 'MagSafe', 'Branco', 'novo', 100, 1),
+('Carregador MagSafe Apple', 380.00, 190.00, 'acessorios', 'Carregamento magnético 15W oficial.', 'https://m.media-amazon.com/images/I/51rY5fN5XkL._AC_SL1200_.jpg', '15W', 'Branco', 'novo', 100, 1),
+('Fonte 20W Original Apple', 199.00, 85.00, 'acessorios', 'Carga rápida certificada pela Apple.', 'https://m.media-amazon.com/images/I/51rY5fN5XkL._AC_SL1200_.jpg', 'USB-C', 'Branco', 'novo', 100, 1),
+('Cabo USB-C para Lightning', 149.00, 55.00, 'acessorios', 'Cabo original de 1 metro.', 'https://m.media-amazon.com/images/I/51rY5fN5XkL._AC_SL1200_.jpg', '1m', 'Branco', 'novo', 100, 1),
+('Magic Mouse 2 (Preto)', 780.00, 520.00, 'acessorios', 'Superfície Multi-Touch e recarregável.', 'https://m.media-amazon.com/images/I/31WjX7jGf9L._AC_SL1000_.jpg', 'BT', 'Preto Espacial', 'novo', 100, 1),
+('Magic Keyboard com Touch ID', 1450.00, 980.00, 'acessorios', 'Segurança e conforto para MacBooks.', 'https://m.media-amazon.com/images/I/4197-Y7z5ZL._AC_SL1000_.jpg', 'Padrão', 'Prata', 'novo', 100, 1),
+('Capa Silicone MagSafe (15 Pro)', 150.00, 45.00, 'acessorios', 'Proteção interna em microfibra.', 'https://m.media-amazon.com/images/I/51rY5fN5XkL._AC_SL1200_.jpg', '15 Pro', 'Azul Marinho', 'novo', 100, 1),
+('Capa Transparente MagSafe', 120.00, 38.00, 'acessorios', 'Não amarela e protege contra quedas.', 'https://m.media-amazon.com/images/I/51rY5fN5XkL._AC_SL1200_.jpg', '14/15/16', 'Transparente', 'novo', 100, 1),
+('AirTag (Pack com 1)', 290.00, 180.00, 'acessorios', 'Nunca mais perca suas chaves.', 'https://m.media-amazon.com/images/I/713637O6IIL._AC_SL1500_.jpg', 'U1 Chip', 'Branco', 'novo', 100, 1),
+('Pochete Esportiva Apple Watch', 85.00, 25.00, 'acessorios', 'Ideal para corridas com seu Watch.', 'https://m.media-amazon.com/images/I/71m09C6I7IL._AC_SL1500_.jpg', 'Ajustável', 'Preto', 'novo', 100, 1),
+('Caneta Pencil para iPad', 250.00, 95.00, 'acessorios', 'Precisão magnética (Alternativa Elite).', 'https://m.media-amazon.com/images/I/61K2BfS7FHL._AC_SL1500_.jpg', 'Bluetooth', 'Branco', 'novo', 100, 1),
+('Hub USB-C 7 em 1 Baseus', 320.00, 180.00, 'acessorios', 'HDMI, USB 3.0 e SD para MacBook.', 'https://m.media-amazon.com/images/I/718mXN+k+SL._AC_SL1500_.jpg', '7-in-1', 'Cinza', 'novo', 100, 1),
+('Película de Vidro 9D Premium', 45.00, 8.00, 'acessorios', 'Proteção total borda a borda.', 'https://m.media-amazon.com/images/I/51rY5fN5XkL._AC_SL1200_.jpg', 'Universal', 'Transparente', 'novo', 100, 1);

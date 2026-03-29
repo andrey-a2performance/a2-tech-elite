@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2 Tech Elite | Especialista em Apple</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #f1f5f9; 
+            overflow-x: hidden; 
+            color: #0f172a;
+        }
+        
+        /* FUNDO DESFOCADO IMERSIVO (ESTILO DELAS) */
+        .bg-site-image {
+            position: fixed;
+            top: 0; left: 0;
+            width: 110%; height: 110%; /* Levemente maior para o blur não vazar */
+            background-image: url('https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            filter: blur(80px) brightness(0.95); /* Desfoque profundo e luxuoso */
+            opacity: 0.6; /* Aumentamos a presença da cor da imagem no fundo */
+            z-index: -1;
+            transform: translate(-2%, -2%); /* Centraliza o fundo maior */
+        }
+
+        .glass-header {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* CARDS MODERNOS COM EFEITO DE VIDRO */
+        .card-produto {
+            background: rgba(255, 255, 255, 0.6); /* Transparência elegante */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 2.5rem; /* Bordas bem arredondadas padrão elite */
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .card-produto:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 40px 80px -20px rgba(79, 70, 229, 0.15); /* Sombra com leve tom indigo */
+            border-color: rgba(79, 70, 229, 0.2);
+        }
+
+        /* ESTILOS DO MODAL DE VÍDEO STORY */
+        .overlay-dark {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 998;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .video-highlight {
+            position: fixed !important;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+            width: 90% !important;
+            max-width: 350px !important;
+            aspect-ratio: 9/16;
+            border: 8px solid white;
+            border-radius: 3.5rem;
+            box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.5);
+            background: black;
+            object-fit: cover;
+        }
+
+        .btn-fechar-video {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            z-index: 1000;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f172a;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-fechar-video:hover {
+            transform: rotate(90deg) scale(1.1);
+            background: #ef4444;
+            color: white;
+        }
+
+        body.modal-aberto { overflow: hidden; }
+
+       /* Garante que nada vaze para as bordas e mantenha o padrão Apple */
+        .max-w-7xl {
+            max-width: 80rem; /* Aproximadamente 1280px */
+            margin-left: auto;
+            margin-right: auto;
+        }
+       
+        /* Brilho sutil nos ícones de marca */
+        .fa-bolt { filter: drop-shadow(0 0 5px rgba(249, 115, 22, 0.4)); }
+        .fa-mobile { filter: drop-shadow(0 0 5px rgba(37, 99, 235, 0.4)); }
+    </style>
+</head>
+<body class="text-slate-900">
+
+   <aside id="sidebar-elite" class="fixed top-0 left-0 h-full w-64 bg-slate-900 border-r border-white/5 z-[70] flex flex-col p-6 transition-all duration-500 -translate-x-full shadow-2xl">
+        
+        <div class="flex justify-between items-center mb-10">
+            <h2 class="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-400">Menu Elite</h2>
+            <button onclick="toggleMenuLateral()" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 text-slate-500 hover:text-white hover:bg-red-500/20 transition-all">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="mb-10">
+            <h2 class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 mb-6">Categorias</h2>
+           <nav class="space-y-3">
+                <button onclick="filtrarCategoriaVitrine('iphones')" class="w-full flex items-center gap-3 text-slate-300 hover:text-white transition-colors group">
+                    <div class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center group-hover:bg-indigo-600 transition-all">
+                        <i class="fas fa-mobile-alt text-xs"></i>
+                    </div>
+                    <span class="text-[10px] font-black uppercase tracking-widest">iPhones</span>
+                </button>
+
+                <button onclick="filtrarCategoriaVitrine('macbook')" class="w-full flex items-center gap-3 text-slate-300 hover:text-white transition-colors group">
+                    <div class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center group-hover:bg-indigo-600 transition-all">
+                        <i class="fas fa-laptop text-xs"></i>
+                    </div>
+                    <span class="text-[10px] font-black uppercase tracking-widest">MacBooks</span>
+                </button>
+
+                <button onclick="filtrarCategoriaVitrine('ipad')" class="w-full flex items-center gap-3 text-slate-300 hover:text-white transition-colors group">
+                    <div class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center group-hover:bg-indigo-600 transition-all">
+                        <i class="fas fa-tablet-alt text-xs"></i>
+                    </div>
+                    <span class="text-[10px] font-black uppercase tracking-widest">iPads & Tablets</span>
+                </button>
+
+                <button onclick="filtrarCategoriaVitrine('watch')" class="w-full flex items-center gap-3 text-slate-300 hover:text-white transition-colors group">
+                    <div class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center group-hover:bg-indigo-600 transition-all">
+                        <i class="fas fa-clock text-xs"></i>
+                    </div>
+                    <span class="text-[10px] font-black uppercase tracking-widest">Apple Watch</span>
+                </button>
+
+                <div class="pt-4 pb-2 border-t border-white/5 mt-4">
+                    <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-4">Outras Marcas</p>
+                    
+                    <button onclick="filtrarCategoriaVitrine('xiaomi')" class="w-full flex items-center gap-3 text-slate-300 hover:text-white transition-colors group mb-3">
+                        <div class="w-8 h-8 rounded-lg bg-orange-600/10 flex items-center justify-center group-hover:bg-orange-600 transition-all">
+                            <i class="fas fa-bolt text-xs text-orange-500 group-hover:text-white"></i>
+                        </div>
+                        <span class="text-[10px] font-black uppercase tracking-widest">Xiaomi</span>
+                    </button>
+
+                    <button onclick="filtrarCategoriaVitrine('samsung')" class="w-full flex items-center gap-3 text-slate-300 hover:text-white transition-colors group mb-3">
+                        <div class="w-8 h-8 rounded-lg bg-blue-600/10 flex items-center justify-center group-hover:bg-blue-600 transition-all">
+                            <i class="fas fa-mobile text-xs text-blue-500 group-hover:text-white"></i>
+                        </div>
+                        <span class="text-[10px] font-black uppercase tracking-widest">Samsung</span>
+                    </button>
+                    
+                </div>
+
+                <button onclick="filtrarCategoriaVitrine('acessorios')" class="w-full flex items-center gap-3 text-slate-300 hover:text-white transition-colors group pt-2">
+                    <div class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center group-hover:bg-indigo-600 transition-all">
+                        <i class="fas fa-headphones text-xs"></i>
+                    </div>
+                    <span class="text-[10px] font-black uppercase tracking-widest">Acessórios</span>
+                </button>
+            </nav>
+        </div>
+
+        <div class="mt-auto border-t border-white/5 pt-6">
+            <a href="login.html" class="flex items-center gap-3 text-indigo-400 hover:text-white transition-all group">
+                <div class="w-10 h-10 rounded-xl bg-indigo-600/10 border border-indigo-600/20 flex items-center justify-center group-hover:bg-indigo-600 transition-all">
+                    <i class="fas fa-user-shield text-sm text-indigo-400 group-hover:text-white"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-[9px] font-black uppercase tracking-tighter opacity-60">Portal</span>
+                    <span class="text-[10px] font-black uppercase tracking-widest leading-none">Gestão Administrativa</span>
+                </div>
+            </a>
+        </div>
+    </aside>
+
+    <div class="bg-site-image"></div>
+
+   <header class="glass-header sticky top-0 z-50 border-b border-slate-200/50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="bg-indigo-600 p-2 rounded-xl text-white shadow-lg shadow-indigo-200">
+                    <i class="fas fa-bolt text-sm"></i>
+                </div>
+                <h1 class="text-xl font-black tracking-tighter uppercase italic text-slate-800">A2 <span class="text-indigo-600">TECH</span></h1>
+            </div>
+
+            <div class="flex items-center gap-3 md:gap-8">
+             <nav class="hidden lg:flex gap-8 text-[10px] font-black uppercase tracking-widest text-slate-500">
+                    <button onclick="filtrarCategoriaVitrine('iphones')" class="hover:text-indigo-600 transition-colors">iPhones</button>
+                    <button onclick="filtrarCategoriaVitrine('samsung')" class="hover:text-indigo-600 transition-colors">Samsung</button>
+                    <button onclick="filtrarCategoriaVitrine('xiaomi')" class="hover:text-indigo-600 transition-colors">Xiaomi</button>
+                    <button onclick="filtrarCategoriaVitrine('macbook')" class="hover:text-indigo-600 transition-colors">MacBooks</button>
+                    <button onclick="filtrarCategoriaVitrine('watch')" class="hover:text-indigo-600 transition-colors">Watch</button>
+                </nav>
+                <div class="flex items-center gap-2 border-l border-slate-200 pl-4 md:pl-8">
+                    <button onclick="abrirSacola()" class="relative p-2 bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center text-slate-700 hover:bg-indigo-50 transition-all">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span id="cart-count" class="absolute -top-1 -right-1 bg-indigo-600 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border-2 border-white">0</span>
+                    </button>
+
+                    <button onclick="toggleMenuLateral()" class="w-10 h-10 flex items-center justify-center bg-slate-900 rounded-xl text-white hover:bg-indigo-600 transition-all shadow-lg">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+   </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-8 relative z-10 transition-all duration-300">
+        
+     <section id="container-banners" class="mb-12 relative h-[400px] md:h-[550px] rounded-[3rem] overflow-hidden shadow-2xl bg-slate-900">
+            <div id="wrapper-banners" class="flex h-full transition-transform duration-1000 ease-in-out">
+                <div class="min-w-full h-full flex items-center justify-center text-white p-16">
+                    <p class="text-[10px] font-black uppercase tracking-[5px] animate-pulse">Sincronizando Ofertas...</p>
+                </div>
+            </div>
+            
+            <div id="dots-banners" class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-20"></div>
+        </section>
+
+      <div class="flex gap-4 mb-12 overflow-x-auto pb-6 no-scrollbar snap-x">
+            <button onclick="carregarProdutosVitrine()" class="snap-start bg-slate-900 text-white px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl hover:bg-indigo-600 transition-all whitespace-nowrap flex items-center gap-3">
+                <i class="fas fa-th-large"></i> Todos
+            </button>
+            
+            <button onclick="filtrarCategoriaVitrine('iphones')" class="snap-start bg-white text-slate-700 border border-slate-200 px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:border-indigo-500 hover:bg-indigo-50 transition-all shadow-sm whitespace-nowrap flex items-center gap-3">
+                <i class="fas fa-mobile-alt text-indigo-600"></i> iPhones
+            </button>
+
+            <button onclick="filtrarCategoriaVitrine('macbook')" class="snap-start bg-slate-100 text-slate-600 border border-slate-200 px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:border-slate-400 transition-all shadow-sm whitespace-nowrap flex items-center gap-3">
+                <i class="fas fa-laptop text-slate-800"></i> MacBooks
+            </button>
+
+            <button onclick="filtrarCategoriaVitrine('xiaomi')" class="snap-start bg-orange-50 text-orange-700 border border-orange-100 px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-orange-600 hover:text-white transition-all shadow-sm whitespace-nowrap flex items-center gap-3">
+                <i class="fas fa-bolt text-orange-500 group-hover:text-white"></i> Xiaomi
+            </button>
+
+            <button onclick="filtrarCategoriaVitrine('samsung')" class="snap-start bg-blue-50 text-blue-700 border border-blue-100 px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all shadow-sm whitespace-nowrap flex items-center gap-3">
+                <i class="fas fa-mobile text-blue-600 group-hover:text-white"></i> Samsung
+            </button>
+
+            <button onclick="filtrarCategoriaVitrine('watch')" class="snap-start bg-emerald-50 text-emerald-700 border border-emerald-100 px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-emerald-600 hover:text-white transition-all shadow-sm whitespace-nowrap flex items-center gap-3">
+                <i class="fas fa-clock text-emerald-500 group-hover:text-white"></i> Watch
+            </button>
+        </div>
+
+        <div id="vitrine" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            </div>
+
+    </main>
+
+    <section class="max-w-7xl mx-auto px-6 mb-16">
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h2 class="text-xl font-black text-slate-800 tracking-tight uppercase italic">Performance <span class="text-indigo-600">em Movimento</span></h2>
+                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Veja os aparelhos reais em mãos</p>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="scrollVideos('esq')" class="w-10 h-10 rounded-xl bg-white border border-slate-100 text-slate-400 hover:text-indigo-600 transition-all shadow-sm flex items-center justify-center">
+                    <i class="fas fa-chevron-left text-xs"></i>
+                </button>
+                <button onclick="scrollVideos('dir')" class="w-10 h-10 rounded-xl bg-white border border-slate-100 text-slate-400 hover:text-indigo-600 transition-all shadow-sm flex items-center justify-center">
+                    <i class="fas fa-chevron-right text-xs"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="grid-videos-tech" class="flex gap-4 overflow-x-auto pb-6 no-scrollbar scroll-smooth snap-x snap-mandatory">
+            <div class="text-center py-10 w-full text-slate-300 font-bold uppercase text-[10px] tracking-widest">
+                Sincronizando Reels...
+            </div>
+        </div>
+    </section>
+
+    <div id="modal-troca" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md">
+        <div class="bg-white w-full max-w-lg rounded-[2.5rem] overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+            <div class="p-6 bg-slate-900 text-white flex justify-between items-center">
+                <h3 class="font-black italic uppercase tracking-tighter text-lg">Avaliação de <span class="text-indigo-400">Trade-in</span></h3>
+                <button onclick="fecharModalTroca()" class="text-slate-400 hover:text-white"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            
+            <div class="p-8 overflow-y-auto space-y-6 no-scrollbar">
+                <div>
+                    <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Seu Aparelho Atual</label>
+                    <input type="text" id="troca-atual" placeholder="Ex: iPhone 12 Pro 128GB" class="w-full bg-slate-50 border border-slate-100 p-4 rounded-2xl text-sm outline-none focus:border-indigo-600 transition-all">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Saúde da Bateria</label>
+                        <div class="relative">
+                            <input type="number" id="troca-bateria" placeholder="85" class="w-full bg-slate-50 border border-slate-100 p-4 rounded-2xl text-sm outline-none focus:border-indigo-600 transition-all">
+                            <span class="absolute right-4 top-4 text-slate-400 font-bold">%</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Estado Visual</label>
+                        <select id="troca-estado" class="w-full bg-slate-50 border border-slate-100 p-4 rounded-2xl text-sm outline-none focus:border-indigo-600 appearance-none">
+                            <option value="Impecável">✨ Impecável</option>
+                            <option value="Sinais de uso">👍 Sinais de uso</option>
+                            <option value="Tela riscada">⚠️ Tela riscada</option>
+                            <option value="Trincado">❌ Trincado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-[9px] font-black text-indigo-600 uppercase tracking-widest block mb-2">Modelo de Interesse</label>
+                    <input type="text" id="troca-interesse" placeholder="Qual modelo você quer comprar?" class="w-full bg-slate-50 border border-slate-100 p-4 rounded-2xl text-sm outline-none focus:border-indigo-600 transition-all">
+                </div>
+
+                <div class="bg-indigo-50 p-4 rounded-2xl border border-indigo-100">
+                    <p class="text-[10px] text-indigo-600 font-bold leading-relaxed italic">
+                        <i class="fas fa-info-circle mr-1"></i> Shark, após clicar no botão abaixo, você será enviado ao WhatsApp. Por favor, **anexe fotos e um vídeo de 10 segundos** do seu aparelho para agilizar o preço final.
+                    </p>
+                </div>
+
+                <button onclick="enviarAvaliacaoWhats()" class="w-full bg-indigo-600 text-white py-5 rounded-2xl font-black uppercase tracking-widest shadow-lg shadow-indigo-100 hover:bg-slate-900 transition-all">
+                    Gerar Minha Avaliação
+                </button>
+            </div>
+        </div>
+    </div>
+
+    
+ <section class="mt-32 px-6">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-white p-8 md:p-12 rounded-[3.5rem] border border-slate-100 shadow-2xl">
+            
+            <div class="h-[400px] w-full rounded-[2.5rem] overflow-hidden shadow-inner border border-slate-50 relative group">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3521.8234658055636!2d-49.0066!3d-28.47!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9521369f6e07663f%3A0xc39958e0be29c787!2sAv.%20Marcolino%20Martins%20Cabral%2C%202157%20-%20Vila%20Moema%2C%20Tubar%C3%A3o%20-%20SC%2C%2088705-001!5e0!3m2!1spt-BR!2sbr!4v1711234567890!5m2!1spt-BR!2sbr"
+                    class="w-full h-full border-0 grayscale group-hover:grayscale-0 transition-all duration-1000" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+                <div class="absolute inset-0 pointer-events-none border-[12px] border-white/10 rounded-[2.5rem]"></div>
+            </div>
+
+            <div class="space-y-8 pl-0 md:pl-6">
+                <div>
+                    <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-indigo-600 mb-2">Sede Oficial</h2>
+                    <h3 class="text-4xl font-black text-slate-900 italic uppercase tracking-tighter">A2 Tech <span class="text-indigo-600">Elite</span></h3>
+                </div>
+
+                <div class="space-y-4">
+                    <p class="text-xs font-bold text-slate-500 leading-relaxed uppercase tracking-widest">
+                        <i class="fas fa-map-marker-alt text-indigo-600 mr-2"></i>
+                        Av. Marcolino Martins Cabral, 2157<br>
+                        Vila Moema, Tubarão - SC
+                    </p>
+                    <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">
+                        <i class="fas fa-clock text-indigo-600 mr-2"></i>
+                        Seg a Sex: 09h - 18:30h | Sáb: 09h - 13h
+                    </p>
+                </div>
+
+                <a href="https://www.google.com/maps/dir//Av.+Marcolino+Martins+Cabral,+2157+-+Vila+Moema,+Tubar%C3%A3o+-+SC" target="_blank" class="inline-flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.2em] text-white bg-slate-900 px-10 py-5 rounded-2xl hover:bg-indigo-600 transition-all duration-500">
+                    Traçar Rota <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+  <footer class="bg-white py-10 border-t border-slate-50 mt-32">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+        
+        <div class="flex items-center gap-3">
+            <div class="bg-indigo-600 w-8 h-8 rounded-lg flex items-center justify-center text-white text-[10px]">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <h2 class="text-sm font-black tracking-tighter uppercase italic text-slate-900">A2 <span class="text-indigo-600">TECH ELITE</span></h2>
+        </div>
+
+        <nav class="flex gap-8 text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">
+            <a href="#vitrine" class="hover:text-indigo-600 transition-all">iPhones</a>
+            <a href="#grid-videos-tech" class="hover:text-indigo-600 transition-all">Seminovos</a>
+        </nav>
+
+        <div class="flex items-center gap-8">
+            <p class="text-[9px] font-black text-slate-200 uppercase tracking-widest">A2 Shark © 2026</p>
+            <div class="flex gap-4">
+                <a href="#" class="text-slate-300 hover:text-indigo-600 transition-all"><i class="fab fa-instagram text-sm"></i></a>
+                <a href="#" class="text-slate-300 hover:text-indigo-600 transition-all"><i class="fab fa-whatsapp text-sm"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        // FUNÇÃO DE RENDERIZAÇÃO TECH ELITE
+        function renderizarProdutos(lista) {
+            const vitrine = document.getElementById("vitrine");
+            vitrine.innerHTML = "";
+
+            lista.forEach((p) => {
+                // Lógica de Selos (Badges) para Eletrônicos
+                const badgeBateria = p.saude_bateria ? `<span class="bg-emerald-50 text-emerald-600 text-[9px] font-black px-2 py-1.5 rounded-lg border border-emerald-100/50"><i class="fas fa-battery-full mr-1"></i>${p.saude_bateria}%</span>` : "";
+                const badgeCapacidade = p.capacidade ? `<span class="bg-slate-50 text-slate-600 text-[9px] font-black px-2 py-1.5 rounded-lg border border-slate-100">${p.capacidade}</span>` : "";
+                const seloCondicao = p.condicao === 'novo' ? 'LACRADO' : (p.condicao === 'vitrine' ? 'VITRINE' : 'SEMINOVO');
+
+                vitrine.innerHTML += `
+    <div class="card-produto group relative p-8 shadow-2xl shadow-slate-200/40 flex flex-col h-full">
+                        
+                        <div class="absolute top-6 left-6 z-10">
+                            <span class="bg-slate-900 text-white text-[8px] font-black px-3 py-1.5 rounded-full tracking-[2px] shadow-lg shadow-slate-200">${seloCondicao}</span>
+                        </div>
+
+                        <div class="relative h-60 w-full mb-6 overflow-hidden rounded-[2rem] bg-slate-50/50 border border-slate-50 flex items-center justify-center">
+                            <img src="${p.imagem}" class="max-h-48 max-w-full object-contain group-hover:scale-110 transition-transform duration-700">
+                        </div>
+
+                        <div class="flex-1 space-y-3 px-1">
+                            <div class="flex gap-2">
+                                ${badgeCapacidade}
+                                ${badgeBateria}
+                            </div>
+                            <h3 class="text-[15px] font-extrabold text-slate-800 uppercase tracking-tight leading-tight">${p.nome}</h3>
+                            <p class="text-[11px] text-slate-400 font-medium line-clamp-2 leading-relaxed">${p.descricao || 'Disponível para entrega imediata em Tubarão e região.'}</p>
+                        </div>
+
+                        <div class="mt-8 pt-5 border-t border-slate-50 flex items-center justify-between">
+                            <div>
+                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Valor à vista</p>
+                                <p class="text-xl font-black text-indigo-600 tracking-tighter">R$ ${parseFloat(p.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+                            </div>
+                           <button onclick="adicionarAoCarrinho(${p.id})" class="bg-slate-900 text-white py-5 px-8 rounded-[1.5rem] font-black uppercase text-[10px] tracking-[0.3em] hover:bg-indigo-600 hover:scale-[1.05] transition-all duration-500 shadow-xl shadow-indigo-100 flex items-center gap-3">
+    ADICIONAR À SACOLA <i class="fas fa-shopping-bag text-[10px]"></i>
+</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Teste de renderização (Simulando vinda do D1)
+       const API_URL = "https://a2-tech-elite-worker.andrey-souza.workers.dev";
+
+        // --- MOTOR DE VENDAS SHARK ---
+let carrinho = [];
+
+// Função para adicionar o iPhone à sacola
+async function adicionarAoCarrinho(id) {
+    try {
+        const response = await fetch(`${API_URL}/produtos`);
+        const produtos = await response.json();
+        const produto = produtos.find(p => p.id === id);
+
+        if (produto) {
+            carrinho.push(produto);
+            atualizarInterfaceSacola();
+            abrirSacola(); // Abre automaticamente para o cliente ver que funcionou
+        }
+    } catch (error) {
+        console.error("Erro ao adicionar item:", error);
+    }
+}
+
+// Atualiza o contador de itens e a lista visual
+function atualizarInterfaceSacola() {
+    const container = document.getElementById("itens-sacola");
+    const totalElement = document.getElementById("total-sacola");
+    const countElement = document.getElementById("cart-count");
+
+    countElement.innerText = carrinho.length;
+
+    if (carrinho.length === 0) {
+        container.innerHTML = `
+            <div class="text-center py-20">
+                <i class="fas fa-shopping-bag text-4xl text-slate-100 mb-4"></i>
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Sua sacola está vazia.</p>
+            </div>`;
+        totalElement.innerText = "R$ 0,00";
+        return;
+    }
+
+    let total = 0;
+    container.innerHTML = carrinho.map((item, index) => {
+        total += parseFloat(item.preco);
+        return `
+            <div class="flex items-center gap-4 bg-slate-50 p-4 rounded-3xl border border-slate-100 relative group">
+                <img src="${item.imagem}" class="w-16 h-16 object-contain">
+                <div class="flex-1">
+                    <h4 class="text-[10px] font-black text-slate-900 uppercase tracking-tight">${item.nome}</h4>
+                    <p class="text-[10px] font-black text-indigo-600 mt-1">R$ ${parseFloat(item.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+                </div>
+                <button onclick="removerDoCarrinho(${index})" class="text-slate-300 hover:text-red-500 transition-colors">
+                    <i class="fas fa-trash-alt text-xs"></i>
+                </button>
+            </div>
+        `;
+    }).join("");
+
+    totalElement.innerText = `R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+}
+
+
+// --- FINALIZAÇÃO DE VENDA SHARK ---
+async function finalizarPedidoWhats() {
+    if (carrinho.length === 0) return alert("Sua sacola está vazia, Shark!");
+
+    // 1. Busca o número oficial no D1 (ou usa o padrão de segurança)
+    let numeroWhats = "5548999999999"; 
+    try {
+        const res = await fetch(`${API_URL}/config/1`);
+        const config = await res.json();
+        if(config && config.whats_vendas) numeroWhats = config.whats_vendas.replace(/\D/g, '');
+    } catch (e) { console.error("Erro ao buscar número:", e); }
+
+    // 2. Monta a lista de desejos formatada
+    let listaItens = "";
+    let total = 0;
+    carrinho.forEach((item, index) => {
+        listaItens += `🔹 *${item.nome}* (${item.capacidade || '---'})\n`;
+        total += parseFloat(item.preco);
+    });
+
+    const msg = `🚀 *NOVA SOLICITAÇÃO - A2 TECH ELITE* 🚀\n\n` +
+                `Olá! Selecionei estes aparelhos no site e gostaria de verificar a disponibilidade:\n\n` +
+                `${listaItens}\n` +
+                `💰 *VALOR TOTAL:* R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}\n\n` +
+                `_Aguardo o retorno para fecharmos!_`;
+
+    const url = `https://wa.me/${numeroWhats}?text=${encodeURIComponent(msg)}`;
+    
+    // 3. Abre o WhatsApp e limpa a sacola para uma nova experiência
+    window.open(url, '_blank');
+    carrinho = [];
+    atualizarInterfaceSacola();
+    fecharSacola();
+}
+
+function removerDoCarrinho(index) {
+    carrinho.splice(index, 1);
+    atualizarInterfaceSacola();
+}
+
+        async function carregarProdutosVitrine() {
+            const vitrine = document.getElementById("vitrine");
+            try {
+                // Shark, usamos a constante global para não dar erro de rota
+                const response = await fetch(`${API_URL}/produtos`);
+                if (!response.ok) throw new Error("Erro na rede");
+                
+                const produtos = await response.json();
+                vitrine.innerHTML = ""; // Limpa o loading
+                renderizarProdutos(produtos);
+            } catch (error) {
+                console.error("Erro ao carregar vitrine:", error);
+                vitrine.innerHTML = `<p class="col-span-full text-center text-slate-400">Falha ao conectar com o estoque.</p>`;
+            }
+        }
+
+       window.onload = async () => {
+            await carregarProdutosVitrine();
+            await carregarBannersD1(); // Agora o banner será chamado
+            await carregarVideosTech();
+        };
+
+        // --- FUNÇÕES DE LEAD (AVALIAÇÃO DE TROCA) ---
+        function abrirModalTroca() {
+            document.getElementById("modal-troca").classList.remove("hidden");
+            document.body.style.overflow = "hidden";
+        }
+
+        function fecharModalTroca() {
+            document.getElementById("modal-troca").classList.add("hidden");
+            document.body.style.overflow = "auto";
+        }
+
+        async function enviarAvaliacaoWhats() {
+            const atual = document.getElementById("troca-atual").value;
+            const bateria = document.getElementById("troca-bateria").value;
+            const estado = document.getElementById("troca-estado").value;
+            const interesse = document.getElementById("troca-interesse").value;
+
+            if(!atual || !interesse) return alert("Shark, preencha os dados do aparelho e o modelo de interesse!");
+
+            // Busca o número do WhatsApp configurado no banco D1
+            let numeroWhats = "5548999999999"; // Fallback de segurança
+            try {
+                const res = await fetch(`${API_URL}/config/1`);
+                const config = await res.json();
+                if(config && config.whats_vendas) numeroWhats = config.whats_vendas.replace(/\D/g, '');
+            } catch (e) { console.error("Erro ao buscar número:", e); }
+
+            const msg = `🔥 *SOLICITAÇÃO DE AVALIAÇÃO (TRADE-IN)* 🔥\n\n` +
+                        `*Meu Aparelho:* ${atual}\n` +
+                        `*Saúde da Bateria:* ${bateria}%\n` +
+                        `*Estado Visual:* ${estado}\n` +
+                        `*Interesse no Modelo:* ${interesse}\n\n` +
+                        `_Estou enviando as fotos e o vídeo do meu aparelho logo abaixo para análise..._`;
+
+            const url = `https://wa.me/${numeroWhats}?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
+            fecharModalTroca();
+        }
+
+        // --- GALERIA DE VÍDEOS TECH (SEM TELA PRETA) ---
+        async function carregarVideosTech() {
+            const container = document.getElementById("grid-videos-tech");
+            try {
+                const res = await fetch(`${API_URL}/videos-tech`);
+                const videos = await res.json();
+
+                if (!videos || videos.length === 0) {
+                    container.innerHTML = "";
+                    container.parentElement.classList.add("hidden");
+                    return;
+                }
+
+                container.innerHTML = videos.map(v => `
+                    <div class="snap-start shrink-0 w-[75%] sm:w-[45%] md:w-[22%] group px-2">
+                        <div onclick="abrirVideoElite('${v.video_url}')" class="relative aspect-[9/16] rounded-[3.5rem] overflow-hidden shadow-2xl cursor-pointer border-[6px] border-white hover:border-indigo-600 transition-all duration-500 hover:scale-[1.03]">
+                            <video 
+                                src="${v.video_url}" 
+                                class="w-full h-full object-cover" 
+                                muted autoplay loop playsinline preload="auto"
+                            ></video>
+                            
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent flex flex-col justify-end p-8">
+                                <p class="text-white text-[10px] font-black uppercase tracking-[0.2em] leading-tight drop-shadow-lg">
+                                    ${v.titulo || 'Review Elite'}
+                                </p>
+                                <div class="mt-4 flex items-center gap-2 text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                    <i class="fas fa-play text-[8px]"></i>
+                                    <span class="text-[8px] font-black uppercase tracking-widest">Assistir Agora</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join("");
+
+            } catch (e) { console.error("Erro nos vídeos:", e); }
+        }
+
+        function scrollVideos(dir) {
+            const c = document.getElementById("grid-videos-tech");
+            const amt = c.offsetWidth * 0.8;
+            c.scrollBy({ left: dir === 'dir' ? amt : -amt, behavior: 'smooth' });
+        }
+
+        // Adiciona o gatilho de carga inicial
+        const originalOnload = window.onload;
+        window.onload = async () => {
+            if(originalOnload) await originalOnload();
+            await carregarVideosTech();
+        };
+
+      // --- MOTOR DE VÍDEO STORY COM SOM - A2 TECH ELITE ---
+        function abrirVideoElite(url) {
+            fecharVideoElite(); // Limpeza de segurança
+
+            const overlay = document.createElement("div");
+            overlay.id = "video-overlay-elite";
+            overlay.className = "overlay-dark";
+            overlay.onclick = fecharVideoElite;
+
+            const btnFechar = document.createElement("button");
+            btnFechar.className = "btn-fechar-video";
+            btnFechar.innerHTML = '<i class="fas fa-times"></i>';
+            btnFechar.onclick = fecharVideoElite;
+
+            const video = document.createElement("video");
+            video.src = url;
+            video.className = "video-highlight";
+            video.autoplay = true;
+            video.controls = true; // Permite o usuário pausar ou ajustar volume
+            video.muted = false;   // Som liberado (iPhone permite pois houve clique)
+            video.playsinline = true;
+
+            document.body.appendChild(overlay);
+            document.body.appendChild(video);
+            document.body.appendChild(btnFechar);
+            document.body.classList.add("modal-aberto");
+        }
+
+        function fecharVideoElite() {
+            const overlay = document.getElementById("video-overlay-elite");
+            const video = document.querySelector(".video-highlight");
+            const btn = document.querySelector(".btn-fechar-video");
+
+            if (overlay) overlay.remove();
+            if (video) video.remove();
+            if (btn) btn.remove();
+            document.body.classList.remove("modal-aberto");
+        }
+
+        // --- CONTROLE DA SACOLA ELITE ---
+function abrirSacola() {
+    document.getElementById("sacola-drawer").classList.remove("translate-x-full");
+    document.getElementById("sacola-overlay").classList.remove("hidden");
+    setTimeout(() => {
+        document.getElementById("sacola-overlay").classList.add("opacity-100");
+    }, 10);
+    document.body.style.overflow = "hidden";
+}
+
+function fecharSacola() {
+    document.getElementById("sacola-drawer").classList.add("translate-x-full");
+    document.getElementById("sacola-overlay").classList.remove("opacity-100");
+    setTimeout(() => {
+        document.getElementById("sacola-overlay").classList.add("hidden");
+    }, 500);
+    document.body.style.overflow = "auto";
+}
+
+// --- MOTOR DE BANNERS ELITE ---
+async function carregarBannersD1() {
+    const wrapper = document.getElementById("wrapper-banners");
+    const dotsContainer = document.getElementById("dots-banners");
+    
+    try {
+        const res = await fetch(`${API_URL}/banners`);
+        const banners = await res.json();
+
+        if (!banners || banners.length === 0) {
+            wrapper.innerHTML = `
+                <div class="min-w-full h-full bg-gradient-to-br from-slate-900 to-indigo-950 flex items-center p-16 relative">
+                    <div class="relative z-10 max-w-xl">
+                        <span class="text-[9px] font-black uppercase tracking-[4px] bg-indigo-500/30 border border-indigo-400/20 px-4 py-2 rounded-full text-white">Elite Selection</span>
+                        <h2 class="text-5xl font-black mt-8 mb-6 italic text-white uppercase tracking-tighter">A2 TECH<br>ELITE</h2>
+                        <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-8">Performance sem limites. Os melhores iPhones da região.</p>
+                    </div>
+                </div>`;
+            return;
+        }
+
+        // Renderiza as imagens
+        wrapper.innerHTML = banners.map(b => `
+            <div class="min-w-full h-full relative">
+                <img src="${b.imagem_url}" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/10"></div>
+            </div>
+        `).join("");
+
+        // Cria as bolinhas (dots)
+        dotsContainer.innerHTML = banners.map((_, i) => `
+            <div class="dot-banner w-2 h-2 rounded-full bg-white/30 transition-all duration-500" data-index="${i}"></div>
+        `).join("");
+
+        const dots = document.querySelectorAll(".dot-banner");
+        if(dots.length > 0) dots[0].classList.replace('bg-white/30', 'bg-white');
+
+        // Lógica de Giro Automático
+        let index = 0;
+        setInterval(() => {
+            index = (index + 1) % banners.length;
+            wrapper.style.transform = `translateX(-${index * 100}%)`;
+            
+            // Atualiza as bolinhas
+            dots.forEach((d, i) => {
+                if(i === index) {
+                    d.classList.replace('bg-white/30', 'bg-white');
+                    d.style.width = "24px"; // Efeito de pílula na ativa
+                } else {
+                    d.classList.replace('bg-white', 'bg-white/30');
+                    d.style.width = "8px";
+                }
+            });
+        }, 5000);
+
+    } catch (e) { 
+        console.error("Erro nos banners:", e); 
+    }
+}
+
+// --- FILTRO DE CATEGORIAS SHARK ---
+     async function filtrarCategoriaVitrine(categoria) {
+            const vitrine = document.getElementById("vitrine");
+            vitrine.innerHTML = `<div class="col-span-full text-center py-20 text-indigo-600"><i class="fas fa-circle-notch fa-spin text-3xl"></i></div>`;
+            
+            try {
+                const response = await fetch(`${API_URL}/produtos`);
+                
+                // Shark, se a API não responder OK, a gente para aqui antes de dar o erro de "falha"
+                if (!response.ok) throw new Error("API Offline");
+                
+                const produtos = await response.json();
+                // Shark, forçamos os dois lados para minúsculo para garantir o match exato
+                const filtrados = produtos.filter(p => 
+                    p.categoria && p.categoria.toLowerCase() === categoria.toLowerCase()
+                );
+                
+                if (filtrados.length === 0) {
+                    vitrine.innerHTML = `<div class="col-span-full text-center py-20 text-slate-400 font-bold uppercase text-xs tracking-widest">Nenhum aparelho desta categoria em estoque.</div>`;
+                } else {
+                    renderizarProdutos(filtrados);
+                }
+                
+                document.getElementById('vitrine').scrollIntoView({ behavior: 'smooth' });
+
+           } catch (error) {
+                console.error("Erro ao filtrar:", error);
+                vitrine.innerHTML = `<div class="col-span-full text-center py-20 text-slate-400 font-bold uppercase text-[10px] tracking-widest">Sincronizando com o estoque... Tente novamente em instantes.</div>`;
+            }
+        }
+
+        // --- CONTROLE DO MENU LATERAL SHARK ---
+        function toggleMenuLateral() {
+            const sidebar = document.getElementById("sidebar-elite");
+            const overlay = document.getElementById("menu-overlay");
+            
+            sidebar.classList.toggle("-translate-x-full");
+            
+            // Cria um overlay escuro se não existir, para fechar ao clicar fora
+            if (!overlay) {
+                const newOverlay = document.createElement("div");
+                newOverlay.id = "menu-overlay";
+                newOverlay.className = "fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-[65]";
+                newOverlay.onclick = toggleMenuLateral;
+                document.body.appendChild(newOverlay);
+            } else {
+                overlay.remove();
+            }
+        }
+    </script>
+
+    <div id="sacola-drawer" class="fixed inset-y-0 right-0 w-full md:w-[450px] bg-white/95 backdrop-blur-2xl shadow-[-20px_0_50px_rgba(0,0,0,0.1)] z-[100] translate-x-full transition-transform duration-700 ease-in-out border-l border-slate-100 flex flex-col">
+    
+    <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-900 text-white">
+        <div>
+            <h3 class="text-xl font-black italic uppercase tracking-tighter">Minha <span class="text-indigo-400">Escolha</span></h3>
+            <p class="text-[9px] font-bold uppercase tracking-[3px] text-slate-400 mt-1">Sua seleção de elite</p>
+        </div>
+        <button onclick="fecharSacola()" class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all">
+            <i class="fas fa-times text-xl"></i>
+        </button>
+    </div>
+
+    <div id="itens-sacola" class="flex-1 overflow-y-auto p-8 space-y-6 no-scrollbar">
+        <div class="text-center py-20">
+            <i class="fas fa-shopping-bag text-4xl text-slate-100 mb-4"></i>
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Sua sacola está vazia.</p>
+        </div>
+    </div>
+
+    <div class="p-8 border-t border-slate-100 space-y-6 bg-slate-50/50">
+        <div class="flex justify-between items-end">
+            <span class="text-[10px] font-black uppercase text-slate-400 tracking-widest">Total Estimado</span>
+            <span id="total-sacola" class="text-3xl font-black text-slate-900 tracking-tighter italic">R$ 0,00</span>
+        </div>
+        
+        <button onclick="finalizarPedidoWhats()" class="w-full bg-indigo-600 text-white py-6 rounded-[2rem] font-black uppercase text-xs tracking-[0.3em] shadow-2xl shadow-indigo-100 hover:bg-slate-900 transition-all duration-500 flex items-center justify-center gap-3">
+            RESERVAR PELO WHATSAPP <i class="fab fa-whatsapp"></i>
+        </button>
+        
+        <p class="text-center text-[8px] font-bold text-slate-400 uppercase tracking-widest">
+            <i class="fas fa-shield-alt mr-1"></i> Sujeito a confirmação de estoque
+        </p>
+    </div>
+</div>
+
+<div id="sacola-overlay" onclick="fecharSacola()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[90] hidden opacity-0 transition-opacity duration-500"></div>
+</body>
+</html>

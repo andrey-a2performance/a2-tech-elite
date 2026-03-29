@@ -1,0 +1,8 @@
+name = "a2-tech-elite-worker"
+main = "worker.js"
+compatibility_date = "2026-03-23"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "a2-tech-db"
+database_id = "8aca5f46-c147-4848-a068-b576e53c0efd"
