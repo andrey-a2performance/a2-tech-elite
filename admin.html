@@ -219,7 +219,7 @@
     <script>
 
         // 1. CONFIGURAÇÃO GLOBAL (Sempre no topo)
-        const API_URL = "https://a2-tech-elite-worker.andrey-souza.workers.dev";
+       const API_URL = "https://a2-tech-elite-worker.web-br.workers.dev";
         let produtoEditandoId = null;
 
        // VERIFICAÇÃO DE SEGURANÇA ELITE
@@ -301,9 +301,10 @@
             container.innerHTML = `<div class="text-center py-12 text-slate-600"><i class="fas fa-circle-notch loading-icon text-3xl mb-4"></i></div>`;
 
             try {
-                const response = await fetch(`${API_URL}/produtos`);
+               const response = await fetch(`${API_URL}/produtos`);
                 if(!response.ok) throw new Error("Falha na API");
                 const produtos = await response.json();
+                produtosLocal = produtos; // Shark, isso aqui é essencial para a edição funcionar
 
                 // --- INÍCIO DA LÓGICA DE MÉTRICAS SHARK ---
                 let valorTotalEstoque = 0;
@@ -363,20 +364,51 @@
                                     <p class="text-[10px] text-slate-500">${p.capacidade || '--'} | Bateria: ${p.saude_bateria || '--'}% | ${p.cor || '--'}</p>
                                 </div>
                             </div>
-                            <div class="text-left md:text-right w-full md:w-auto flex flex-row md:flex-col justify-between items-center md:items-end gap-3 border-t md:border-none border-slate-800 pt-3 md:pt-0">
-                                <span class="text-lg font-black text-emerald-400">R$ ${parseFloat(p.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                           <div class="text-left md:text-right w-full md:w-auto flex flex-row md:flex-col justify-between items-center md:items-end gap-3 border-t md:border-none border-slate-800 pt-3 md:pt-0">
+                                <div class="flex flex-col items-end">
+                                    <span class="text-lg font-black text-emerald-400">R$ ${parseFloat(p.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                    <span class="text-[8px] font-black text-slate-600 bg-slate-900/50 px-2 py-1 rounded-md uppercase tracking-widest border border-white/5">ID: #${p.id}</span>
+                                </div>
                                 <div class="flex gap-2">
-                                    <button onclick="prepararEdicao(${p.id})" class="text-slate-500 hover:text-indigo-400 w-8 h-8 rounded-lg bg-slate-800/50 flex items-center justify-center transition-colors"><i class="fas fa-edit text-xs"></i></button>
-                                    <button onclick="excluirProduto(${p.id})" class="text-slate-500 hover:text-red-400 w-8 h-8 rounded-lg bg-slate-800/50 flex items-center justify-center transition-colors"><i class="fas fa-trash-alt text-xs"></i></button>
+                                    <button onclick="prepararEdicao(${p.id})" class="w-8 h-8 bg-indigo-950/30 text-indigo-400 rounded-lg flex items-center justify-center hover:bg-indigo-500 hover:text-white transition-all border border-indigo-900/30">
+                                        <i class="fas fa-edit text-xs"></i>
+                                    </button>
+                                    <button onclick="excluirProduto(${p.id})" class="w-8 h-8 bg-red-950/30 text-red-500 rounded-lg flex items-center justify-center hover:bg-red-500 hover:text-white transition-all border border-red-900/30">
+                                        <i class="fas fa-trash-alt text-xs"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>`;
                 });
 
-            } catch (error) {
+           } catch (error) {
                 console.error(error);
                 container.innerHTML = `<div class="text-center py-12 text-red-400 bg-red-950/20 rounded-xl border border-red-900 font-bold text-xs uppercase tracking-widest">Erro de conexão com o banco de dados.</div>`;
             }
+        }
+
+        // Shark, essa função preenche o formulário com os dados do produto para editar
+        function prepararEdicao(id) {
+            const produto = produtosLocal.find(p => p.id === id);
+            if (!produto) return;
+
+            produtoEditandoId = id;
+            
+            document.getElementById('nome').value = produto.nome;
+            document.getElementById('preco').value = produto.preco;
+            document.getElementById('custo').value = produto.custo || 0;
+            document.getElementById('categoria').value = produto.categoria;
+            document.getElementById('descricao').value = produto.descricao;
+            document.getElementById('capacidade').value = produto.capacidade || '';
+            document.getElementById('cor').value = produto.cor || '';
+            document.getElementById('condicao').value = produto.condicao || 'seminovo';
+            document.getElementById('saude_bateria').value = produto.saude_bateria || 100;
+            document.getElementById('estoque').value = produto.estoque || 1;
+
+            const btn = document.getElementById('btn-salvar-produto');
+            if(btn) btn.innerText = "ATUALIZAR PRODUTO ELITE";
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // 4. SALVAR/ATUALIZAR PRODUTO NO CLOUDFLARE D1
@@ -404,17 +436,25 @@
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> CADASTRANDO...';
 
-            try {
+          try {
+                // Shark, aqui decidimos se enviamos um novo (POST) ou atualizamos (PUT)
+                const metodo = produtoEditandoId ? 'PUT' : 'POST';
+                if (produtoEditandoId) p.id = produtoEditandoId;
+
                 const response = await fetch(`${API_URL}/produtos`, {
-                    method: 'POST',
+                    method: metodo,
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(p)
                 });
 
                 if (response.ok) {
-                    mostrarToast("PRODUTO ELITE CADASTRADO!");
+                    mostrarToast(produtoEditandoId ? "PRODUTO ATUALIZADO COM SUCESSO!" : "PRODUTO ELITE CADASTRADO!");
+                    
+                    // Shark, resetamos o ID e o botão para o modo de cadastro original
+                    produtoEditandoId = null;
+                    document.getElementById('btn-salvar').innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Cadastrar no D1';
+                    
                     limparFormulario();
-                    // Limpa a prévia visual da imagem
                     document.getElementById('img-admin-preview-prod').classList.add('hidden');
                     document.getElementById('img-status-prod').classList.remove('hidden');
                     await carregarProdutosEstoque();
@@ -451,29 +491,51 @@
             document.getElementById('btn-salvar').innerText = "Cadastrar no D1";
         }
 
-        // Preparar para carregar no D1 para buscar os dados antigos e preencher o form (Para Update futuramente)
-        async function prepararEdicao(id) {
-            alert("Em breve: Carregar dados para edição.");
-            // produtoEditandoId = id;
-            // Carregar dados no form...
-            // document.getElementById('btn-salvar').innerText = "Atualizar Aparelho";
+        // Shark, essa função preenche o formulário com os dados do produto para editar
+        function prepararEdicao(id) {
+            const produto = produtosLocal.find(p => p.id === id);
+            if (!produto) return;
+
+            produtoEditandoId = id;
+            
+            document.getElementById('nome-prod').value = produto.nome;
+            document.getElementById('preco-prod').value = produto.preco;
+            document.getElementById('custo-prod').value = produto.custo || 0;
+            document.getElementById('cat-prod').value = produto.categoria;
+            document.getElementById('desc-prod').value = produto.descricao;
+            document.getElementById('cap-prod').value = produto.capacidade || '';
+            document.getElementById('cor-prod').value = produto.cor || '';
+            document.getElementById('cond-prod').value = produto.condicao || 'seminovo';
+            document.getElementById('bat-prod').value = produto.saude_bateria || 100;
+            
+            // Shark, aqui carregamos a foto de volta para o preview
+            document.getElementById('img-prod').value = produto.imagem;
+            const preview = document.getElementById('img-admin-preview-prod');
+            preview.src = produto.imagem;
+            preview.classList.remove('hidden');
+            document.getElementById('img-status-prod').classList.add('hidden');
+
+            const btn = document.getElementById('btn-salvar');
+            if(btn) btn.innerHTML = '<i class="fas fa-edit"></i> ATUALIZAR NO D1';
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-      // Shark, deixei a lógica pronta, precisa criar a rota DELETE no Worker
+     // Shark, função corrigida: usa DELETE e envia apenas o ID para a nuvem
         async function excluirProduto(id) {
             if(!confirm("Shark, deseja realmente remover este aparelho do estoque?")) return;
 
             try {
                 const response = await fetch(`${API_URL}/produtos`, {
-                    method: "DELETE",
-                    headers: { "Content-Type": "application/json" },
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ id: id })
                 });
 
-                if(response.ok) {
-                    mostrarToast("Aparelho removido com sucesso!");
-                    await carregarProdutosEstoque();
-                }
+                if (!response.ok) throw new Error('Falha ao excluir');
+
+                alert('Produto removido do D1 com sucesso!');
+                carregarProdutosEstoque();
             } catch (error) {
                 console.error(error);
                 alert("Falha ao excluir produto na nuvem.");
@@ -688,6 +750,37 @@
                     }
                 }
             }
+        }
+
+       
+    // Shark, essa função puxa os dados do estoque para o formulário lá no topo
+        function prepararEdicao(id) {
+            const produto = produtosLocal.find(p => p.id === id);
+            if (!produto) return;
+
+            produtoEditandoId = id; // Avisa o sistema que estamos editando
+            
+            document.getElementById('nome-prod').value = produto.nome;
+            document.getElementById('preco-prod').value = produto.preco;
+            document.getElementById('custo-prod').value = produto.custo || 0;
+            document.getElementById('cat-prod').value = produto.categoria;
+            document.getElementById('desc-prod').value = produto.descricao;
+            document.getElementById('cap-prod').value = produto.capacidade || '';
+            document.getElementById('cor-prod').value = produto.cor || '';
+            document.getElementById('cond-prod').value = produto.condicao || 'seminovo';
+            document.getElementById('bat-prod').value = produto.saude_bateria || 100;
+            
+            // Carrega a foto no preview
+            document.getElementById('img-prod').value = produto.imagem;
+            const preview = document.getElementById('img-admin-preview-prod');
+            preview.src = produto.imagem;
+            preview.classList.remove('hidden');
+            document.getElementById('img-status-prod').classList.add('hidden');
+
+            const btn = document.getElementById('btn-salvar');
+            if(btn) btn.innerHTML = '<i class="fas fa-edit"></i> ATUALIZAR NO D1';
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>

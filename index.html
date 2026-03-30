@@ -143,6 +143,18 @@
     from { opacity: 0; transform: scale(0.95); }
     to { opacity: 1; transform: scale(1); }
 }
+
+/* Shark, essa animação dá o efeito de "pulo" e zoom nos botões do menu ao carregar a página */
+@keyframes zoomBounce {
+    0% { transform: scale(0.7); opacity: 0; }
+    60% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-in-zoom {
+    animation: zoomBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    opacity: 0; 
+}
     </style>
 </head>
 <body class="text-slate-900">
@@ -331,6 +343,13 @@
        <div id="vitrine" class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8">
             </div>
 
+        <div id="container-ver-mais" class="hidden mt-12 flex justify-center">
+            <button onclick="verMaisProdutos()" class="group flex items-center gap-3 bg-white border border-slate-200 px-10 py-5 rounded-2xl shadow-sm hover:shadow-lg hover:border-indigo-600 transition-all duration-500">
+                <span class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 group-hover:text-indigo-600">Explorar Mais Aparelhos</span>
+                <i class="fas fa-plus text-[10px] text-slate-300 group-hover:text-indigo-600 transition-all"></i>
+            </button>
+        </div>
+
     </main>
 
     <section class="max-w-7xl mx-auto px-6 mb-16">
@@ -474,10 +493,14 @@
     <script>
         // FUNÇÃO DE RENDERIZAÇÃO TECH ELITE
         function renderizarProdutos(lista) {
+            listaAtualShark = lista; // Shark, salva a lista atual para o "Ver Mais" não se perder
             const vitrine = document.getElementById("vitrine");
             vitrine.innerHTML = "";
 
-            lista.forEach((p) => {
+            // Shark, aqui o sistema corta a lista para mostrar apenas o limite definido
+            const exibidos = lista.slice(0, limiteExibicao);
+
+            exibidos.forEach((p) => {
                 // Lógica de Selos (Badges) para Eletrônicos
                 const badgeBateria = p.saude_bateria ? `<span class="bg-emerald-50 text-emerald-600 text-[9px] font-black px-2 py-1.5 rounded-lg border border-emerald-100/50"><i class="fas fa-battery-full mr-1"></i>${p.saude_bateria}%</span>` : "";
                 const badgeCapacidade = p.capacidade ? `<span class="bg-slate-50 text-slate-600 text-[9px] font-black px-2 py-1.5 rounded-lg border border-slate-100">${p.capacidade}</span>` : "";
@@ -512,13 +535,29 @@
         </div>
     </div>
 `;
-            });
+       });
+
+            // Shark, aqui o sistema checa: se a lista total for maior que o que estamos vendo, mostra o botão
+            const btnVerMais = document.getElementById("container-ver-mais");
+            if (lista.length > limiteExibicao) {
+                btnVerMais.classList.remove("hidden");
+            } else {
+                btnVerMais.classList.add("hidden");
+            }
+        }
+
+        // Função Shark Elite: aumenta o limite e re-renderiza a lista que já estava na tela
+        function verMaisProdutos() {
+            limiteExibicao += 8;
+            renderizarProdutos(listaAtualShark);
         }
 
-        // Teste de renderização (Simulando vinda do D1)
-      const API_URL = "https://a2-tech-elite-worker.web-br.workers.dev";
-        // --- MOTOR DE VENDAS SHARK ---
+      // Teste de renderização (Simulando vinda do D1)
+const API_URL = "https://a2-tech-elite-worker.web-br.workers.dev";
+let limiteExibicao = 8; // Shark, começamos mostrando 8 produtos para o site carregar voando
+// --- MOTOR DE VENDAS SHARK ---
 let carrinho = [];
+let listaAtualShark = []; // Shark, essa variável guarda o que está na tela agora
 
 // Função para adicionar o iPhone à sacola
 async function adicionarAoCarrinho(id) {
