@@ -491,57 +491,52 @@
 </footer>
 
     <script>
-       // FUNÇÃO DE RENDERIZAÇÃO TECH ELITE
+      // FUNÇÃO DE RENDERIZAÇÃO TECH ELITE
         function renderizarProdutos(lista) {
+            listaAtualShark = lista; // Shark, salva a lista para o Ver Mais
             const vitrine = document.getElementById("vitrine");
             vitrine.innerHTML = "";
 
-            lista.forEach((p) => {
-                // Lógica de Selos (Badges) para Eletrônicos
-                const badgeBateria = p.saude_bateria ? `<span class="bg-emerald-50 text-emerald-600 text-[9px] font-black px-2 py-1.5 rounded-lg border border-emerald-100/50"><i class="fas fa-battery-full mr-1"></i>${p.saude_bateria}%</span>` : "";
-                const badgeCapacidade = p.capacidade ? `<span class="bg-slate-50 text-slate-600 text-[9px] font-black px-2 py-1.5 rounded-lg border border-slate-100">${p.capacidade}</span>` : "";
+            // Shark, aqui aplicamos o corte para o limite (essencial para mobile)
+            const exibidos = lista.slice(0, limiteExibicao);
+
+            exibidos.forEach((p) => {
                 const seloCondicao = p.condicao === 'novo' ? 'LACRADO' : (p.condicao === 'vitrine' ? 'VITRINE' : 'SEMINOVO');
 
-              vitrine.innerHTML += `
-    <div class="card-produto group relative p-3 md:p-4 shadow-lg shadow-slate-200/30 flex flex-col h-full bg-white/60 backdrop-blur-md border border-white/40 rounded-[1.5rem] md:rounded-[2rem]">
-        
-        <div class="absolute top-2 left-2 z-10">
-            <span class="bg-slate-900/80 backdrop-blur-sm text-white text-[6px] md:text-[7px] font-black px-2 py-1 rounded-full tracking-widest uppercase">${seloCondicao}</span>
-        </div>
-
-        <div onclick='abrirModalProduto(${JSON.stringify(p).replace(/'/g, "'")})' class="relative h-28 md:h-40 w-full mb-2 overflow-hidden rounded-[1rem] md:rounded-[1.5rem] bg-slate-50/50 flex items-center justify-center cursor-zoom-in">
-            <img src="${p.imagem}" class="max-h-20 md:max-h-32 max-w-[85%] object-contain group-hover:scale-110 transition-transform duration-500">
-        </div>
-
-        <div class="flex-1 space-y-1 px-1">
-            <h3 class="text-[10px] md:text-[12px] font-extrabold text-slate-800 uppercase tracking-tight leading-tight line-clamp-1">${p.nome}</h3>
-            
-            <div class="flex flex-wrap gap-1 mb-1">
-                <span class="text-[7px] md:text-[8px] font-bold bg-indigo-50 text-indigo-600 px-1.5 py-0.5 rounded-md uppercase">${p.capacidade}</span>
-                ${p.saude_bateria ? `<span class="text-[7px] md:text-[8px] font-bold bg-emerald-50 text-emerald-600 px-1.5 py-0.5 rounded-md">🔋 ${p.saude_bateria}%</span>` : ''}
-            </div>
-
-            <p class="text-[12px] md:text-[14px] font-black text-indigo-600 tracking-tighter">R$ ${parseFloat(p.preco).toLocaleString('pt-BR')}</p>
-        </div>
-
-        <div class="mt-2 pt-2 border-t border-slate-100/50">
-            <button onclick="adicionarAoCarrinho(${p.id})" class="w-full bg-slate-900 text-white py-2 md:py-3 rounded-lg md:rounded-xl font-black uppercase text-[7px] md:text-[8px] tracking-widest hover:bg-indigo-600 transition-all flex items-center justify-center gap-2">
-                ADICIONAR <i class="fas fa-plus text-[6px]"></i>
-            </button>
-        </div>
-    </div>
-`;
+                vitrine.innerHTML += `
+                    <div class="card-produto group relative p-3 md:p-4 shadow-lg shadow-slate-200/30 flex flex-col h-full bg-white/60 backdrop-blur-md border border-white/40 rounded-[1.5rem] md:rounded-[2rem]">
+                        <div class="absolute top-2 left-2 z-10">
+                            <span class="bg-slate-900/80 backdrop-blur-sm text-white text-[6px] md:text-[7px] font-black px-2 py-1 rounded-full tracking-widest uppercase">${seloCondicao}</span>
+                        </div>
+                        <div onclick='abrirModalProduto(${JSON.stringify(p).replace(/'/g, "&apos;")})' class="relative h-28 md:h-40 w-full mb-2 overflow-hidden rounded-[1rem] md:rounded-[1.5rem] bg-slate-50/50 flex items-center justify-center cursor-zoom-in">
+                            <img src="${p.imagem}" class="max-h-20 md:max-h-32 max-w-[85%] object-contain group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="flex-1 space-y-1 px-1">
+                            <h3 class="text-[10px] md:text-[12px] font-extrabold text-slate-800 uppercase tracking-tight leading-tight line-clamp-1">${p.nome}</h3>
+                            <div class="flex flex-wrap gap-1 mb-1">
+                                <span class="text-[7px] md:text-[8px] font-bold bg-indigo-50 text-indigo-600 px-1.5 py-0.5 rounded-md uppercase">${p.capacidade}</span>
+                                ${p.saude_bateria ? `<span class="text-[7px] md:text-[8px] font-bold bg-emerald-50 text-emerald-600 px-1.5 py-0.5 rounded-md">🔋 ${p.saude_bateria}%</span>` : ''}
+                            </div>
+                            <p class="text-[12px] md:text-[14px] font-black text-indigo-600 tracking-tighter">R$ ${parseFloat(p.preco).toLocaleString('pt-BR')}</p>
+                        </div>
+                        <div class="mt-2 pt-2 border-t border-slate-100/50">
+                            <button onclick="adicionarAoCarrinho(${p.id})" class="w-full bg-slate-900 text-white py-2 md:py-3 rounded-lg md:rounded-xl font-black uppercase text-[7px] md:text-[8px] tracking-widest hover:bg-indigo-600 transition-all flex items-center justify-center gap-2">
+                                ADICIONAR <i class="fas fa-plus text-[6px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
             });
-        }
 
-            // Shark, aqui o sistema checa: se a lista total for maior que o que estamos vendo, mostra o botão
+            // Shark, controle do botão Ver Mais corrigido
             const btnVerMais = document.getElementById("container-ver-mais");
             if (lista.length > limiteExibicao) {
                 btnVerMais.classList.remove("hidden");
             } else {
                 btnVerMais.classList.add("hidden");
             }
-        }
+        }
+        
 
         // Função Shark Elite: aumenta o limite e re-renderiza a lista que já estava na tela
         function verMaisProdutos() {
