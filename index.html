@@ -491,16 +491,12 @@
 </footer>
 
     <script>
-        // FUNÇÃO DE RENDERIZAÇÃO TECH ELITE
+       // FUNÇÃO DE RENDERIZAÇÃO TECH ELITE
         function renderizarProdutos(lista) {
-            listaAtualShark = lista; // Shark, salva a lista atual para o "Ver Mais" não se perder
             const vitrine = document.getElementById("vitrine");
             vitrine.innerHTML = "";
 
-            // Shark, aqui o sistema corta a lista para mostrar apenas o limite definido
-            const exibidos = lista.slice(0, limiteExibicao);
-
-            exibidos.forEach((p) => {
+            lista.forEach((p) => {
                 // Lógica de Selos (Badges) para Eletrônicos
                 const badgeBateria = p.saude_bateria ? `<span class="bg-emerald-50 text-emerald-600 text-[9px] font-black px-2 py-1.5 rounded-lg border border-emerald-100/50"><i class="fas fa-battery-full mr-1"></i>${p.saude_bateria}%</span>` : "";
                 const badgeCapacidade = p.capacidade ? `<span class="bg-slate-50 text-slate-600 text-[9px] font-black px-2 py-1.5 rounded-lg border border-slate-100">${p.capacidade}</span>` : "";
@@ -513,7 +509,7 @@
             <span class="bg-slate-900/80 backdrop-blur-sm text-white text-[6px] md:text-[7px] font-black px-2 py-1 rounded-full tracking-widest uppercase">${seloCondicao}</span>
         </div>
 
-        <div onclick='abrirModalProduto(${JSON.stringify(p).replace(/'/g, "&apos;")})' class="relative h-28 md:h-40 w-full mb-2 overflow-hidden rounded-[1rem] md:rounded-[1.5rem] bg-slate-50/50 flex items-center justify-center cursor-zoom-in">
+        <div onclick='abrirModalProduto(${JSON.stringify(p).replace(/'/g, "'")})' class="relative h-28 md:h-40 w-full mb-2 overflow-hidden rounded-[1rem] md:rounded-[1.5rem] bg-slate-50/50 flex items-center justify-center cursor-zoom-in">
             <img src="${p.imagem}" class="max-h-20 md:max-h-32 max-w-[85%] object-contain group-hover:scale-110 transition-transform duration-500">
         </div>
 
@@ -535,7 +531,8 @@
         </div>
     </div>
 `;
-       });
+            });
+        }
 
             // Shark, aqui o sistema checa: se a lista total for maior que o que estamos vendo, mostra o botão
             const btnVerMais = document.getElementById("container-ver-mais");
@@ -887,6 +884,7 @@ async function carregarBannersD1() {
 
 // --- FILTRO DE CATEGORIAS SHARK ---
      async function filtrarCategoriaVitrine(categoria) {
+            limiteExibicao = 8; // Shark, reseta o limite para não vir tudo de uma vez
             const vitrine = document.getElementById("vitrine");
             vitrine.innerHTML = `<div class="col-span-full text-center py-20 text-indigo-600"><i class="fas fa-circle-notch fa-spin text-3xl"></i></div>`;
             
