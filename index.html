@@ -3,58 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A2 Tech Elite | Especialista em Apple</title>
+   <title>A2 Imports | Especialista em Apple</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --ouro: #c5a059;
+            --preto: #000000;
+        }
+
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #f1f5f9; 
+            background-color: var(--preto); 
             overflow-x: hidden; 
-            color: #0f172a;
+            color: #ffffff;
         }
         
-        /* FUNDO DESFOCADO IMERSIVO (ESTILO DELAS) */
+        /* FUNDO ELITE IMERSIVO - Shark, agora com gradiente preto */
         .bg-site-image {
             position: fixed;
             top: 0; left: 0;
-            width: 110%; height: 110%; /* Levemente maior para o blur não vazar */
-            background-image: url('https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&q=80&w=2000');
+            width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), var(--preto)), url('fundo01.png?v=1');
             background-size: cover;
             background-position: center;
-            filter: blur(80px) brightness(0.95); /* Desfoque profundo e luxuoso */
-            opacity: 0.6; /* Aumentamos a presença da cor da imagem no fundo */
-            z-index: -1;
-            transform: translate(-2%, -2%); /* Centraliza o fundo maior */
+            opacity: 0.4; 
+            z-index: -2; 
         }
 
+        /* CLASSE MESTRA: EFEITO VIDRO PRETO COM BORDA OURO */
+        .glass-base {
+            background: rgba(0, 0, 0, 0.7) !important; 
+            backdrop-filter: blur(30px) saturate(150%);
+            -webkit-backdrop-filter: blur(30px) saturate(150%);
+            border: 1px solid rgba(197, 160, 89, 0.3) !important; /* Borda Ouro Envelhecido */
+        }
+
+        /* HEADER TRANSPARENTE - ESTILO BLACK LUXURY */
         .glass-header {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(0, 0, 0, 0.8) !important;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.2) !important;
+        }
+
+        /* MÉTODO SHARK: Títulos em Degradê Ouro */
+        .titulo-elite {
+            background: linear-gradient(135deg, #ffffff 30%, #c5a059 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
         }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* CARDS MODERNOS COM EFEITO DE VIDRO */
+        /* CARDS ELITE BLACK & GOLD - Shark, aqui a mágica acontece */
         .card-produto {
-            background: rgba(255, 255, 255, 0.6); /* Transparência elegante */
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 2.5rem; /* Bordas bem arredondadas padrão elite */
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            background: rgba(255, 255, 255, 0.03); /* Transparência Sutil */
+            backdrop-filter: blur(20px) saturate(150%);
+            -webkit-backdrop-filter: blur(20px) saturate(150%);
+            border: 1px solid rgba(197, 160, 89, 0.4); /* Borda Ouro Envelhecido */
+            border-radius: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .card-produto:hover {
-            background: rgba(255, 255, 255, 0.9);
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 40px 80px -20px rgba(79, 70, 229, 0.15); /* Sombra com leve tom indigo */
-            border-color: rgba(79, 70, 229, 0.2);
+            background: rgba(197, 160, 89, 0.05); /* Leve brilho ouro no fundo */
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 50px -10px rgba(197, 160, 89, 0.2); /* Glow dourado */
+            border-color: var(--ouro);
+        }
+
+        /* Ajuste de Cor dos Títulos e Textos para Fundo Preto */
+        .card-produto h3 { color: #ffffff !important; }
+        .card-produto p { color: var(--ouro) !important; }
+        .text-slate-900, .text-slate-800 { color: #ffffff !important; }
+
+        /* MODAL DE DETALHES */
+        #modal-detalhe {
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
         }
 
         /* ESTILOS DO MODAL DE VÍDEO STORY */
@@ -113,135 +144,121 @@
 
         body.modal-aberto { overflow: hidden; }
 
-       /* Garante que nada vaze para as bordas e mantenha o padrão Apple */
         .max-w-7xl {
-            max-width: 80rem; /* Aproximadamente 1280px */
+            max-width: 80rem;
             margin-left: auto;
             margin-right: auto;
         }
-       
-        /* Brilho sutil nos ícones de marca */
+        
         .fa-bolt { filter: drop-shadow(0 0 5px rgba(249, 115, 22, 0.4)); }
         .fa-mobile { filter: drop-shadow(0 0 5px rgba(37, 99, 235, 0.4)); }
 
-        /* Shark, aqui garantimos que o modal e os cards fiquem com acabamento premium */
-.card-produto {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.card-produto:hover {
-    transform: translateY(-5px);
-    border-color: rgba(99, 102, 241, 0.4);
-}
-#modal-detalhe {
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-}
-.animate-in {
-    animation: zoomIn 0.3s ease-out;
-}
-@keyframes zoomIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-}
+        /* ANIMAÇÕES */
+        .animate-in { animation: zoomIn 0.3s ease-out; }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
 
-/* Shark, essa animação dá o efeito de "pulo" e zoom nos botões do menu ao carregar a página */
-@keyframes zoomBounce {
-    0% { transform: scale(0.7); opacity: 0; }
-    60% { transform: scale(1.05); opacity: 1; }
-    100% { transform: scale(1); opacity: 1; }
-}
+        @keyframes zoomBounce {
+            0% { transform: scale(0.7); opacity: 0; }
+            60% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
 
-.animate-in-zoom {
-    animation: zoomBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    opacity: 0; 
-}
+        .animate-in-zoom {
+            animation: zoomBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            opacity: 0; 
+        }
     </style>
 </head>
 <body class="text-slate-900">
 
-   <aside id="sidebar-elite" class="fixed top-0 left-0 h-full w-64 bg-slate-900 border-r border-white/5 z-[70] flex flex-col p-6 transition-all duration-500 -translate-x-full shadow-2xl">
+   <aside id="sidebar-elite"class="fixed top-0 left-0 h-full w-64 glass-base border-r border-[#c5a059]/20 z-[70] flex flex-col p-6 transition-all duration-500 -translate-x-full shadow-2xl bg-black">
         
-        <div class="flex justify-between items-center mb-10">
-            <h2 class="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-400">Menu Elite</h2>
-            <button onclick="toggleMenuLateral()" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 text-slate-500 hover:text-white hover:bg-red-500/20 transition-all">
+       <div class="flex justify-between items-start mb-10">
+            <div class="flex flex-col gap-3">
+                <img src="logo01.png" alt="A2 Imports" class="h-16 w-16 object-cover rounded-2xl border-2 border-[#c5a059]/40 shadow-lg shadow-[#c5a059]/10">
+                <h2 class="text-xs font-black uppercase tracking-[0.4em] titulo-elite">A2 IMPORTS</h2>
+            </div>
+            <button onclick="toggleMenuLateral()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-[#c5a059]/10 text-[#c5a059] hover:bg-[#c5a059] hover:text-black transition-all border border-[#c5a059]/20">
                 <i class="fas fa-times"></i>
             </button>
         </div>
 
         <div class="mb-10">
-            <h2 class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 mb-6">Categorias</h2>
-           <nav class="space-y-3">
-                <button onclick="filtrarCategoriaVitrine('iphones'); toggleMenuLateral()" class="relative overflow-hidden group w-full h-14 rounded-xl flex items-center px-4 transition-all duration-500 hover:scale-105 active:scale-95 border border-white/5">
-    <img src="https://images.pexels.com/photos/4065876/pexels-photo-4065876.jpeg?auto=compress&cs=tinysrgb&w=400" class="absolute inset-0 w-full h-full object-cover opacity-40 transition-transform duration-700 group-hover:scale-125">
-    <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent"></div>
-    <i class="fas fa-mobile-alt relative z-10 w-6 text-indigo-400"></i>
+            <h2 class="text-[10px] font-black uppercase tracking-[0.3em] text-white/50 mb-6">Categorias</h2>
+        <nav class="space-y-3">
+                <button onclick="filtrarCategoriaVitrine('iphones'); toggleMenuLateral()" class="relative overflow-hidden group w-full h-14 rounded-xl flex items-center px-4 transition-all duration-500 hover:scale-105 active:scale-95 border border-[#c5a059]/20">
+    <img src="https://images.pexels.com/photos/4065876/pexels-photo-4065876.jpeg?auto=compress&cs=tinysrgb&w=400" class="absolute inset-0 w-full h-full object-cover opacity-20 transition-transform duration-700 group-hover:scale-125">
+    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
+    <i class="fas fa-mobile-alt relative z-10 w-6 text-[#c5a059]"></i>
     <span class="relative z-10 text-[10px] font-black text-white uppercase tracking-[0.2em] italic ml-3">iPhones</span>
 </button>
 
-               <button onclick="filtrarCategoriaVitrine('macbook'); toggleMenuLateral()" class="relative overflow-hidden group w-full h-14 rounded-xl flex items-center px-4 transition-all duration-500 hover:scale-105 active:scale-95 border border-white/5">
-    <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=400&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-40 transition-transform duration-700 group-hover:scale-125">
-    <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent"></div>
-    <i class="fas fa-laptop relative z-10 w-6 text-slate-400"></i>
+               <button onclick="filtrarCategoriaVitrine('macbook'); toggleMenuLateral()" class="relative overflow-hidden group w-full h-14 rounded-xl flex items-center px-4 transition-all duration-500 hover:scale-105 active:scale-95 border border-[#c5a059]/20">
+    <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=400&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-20 transition-transform duration-700 group-hover:scale-125">
+    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
+    <i class="fas fa-laptop relative z-10 w-6 text-[#c5a059]"></i>
     <span class="relative z-10 text-[10px] font-black text-white uppercase tracking-[0.2em] italic ml-3">MacBooks</span>
 </button>
 
-           <button onclick="filtrarCategoriaVitrine('ipad'); toggleMenuLateral()" class="relative overflow-hidden group w-full h-14 rounded-xl flex items-center px-4 transition-all duration-500 hover:scale-105 active:scale-95 border border-white/5">
-    <img src="https://images.pexels.com/photos/1334597/pexels-photo-1334597.jpeg?auto=compress&cs=tinysrgb&w=400" class="absolute inset-0 w-full h-full object-cover opacity-40 transition-transform duration-700 group-hover:scale-125">
-    <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent"></div>
-    <i class="fas fa-tablet-alt relative z-10 w-6 text-blue-400"></i>
+           <button onclick="filtrarCategoriaVitrine('ipad'); toggleMenuLateral()" class="relative overflow-hidden group w-full h-14 rounded-xl flex items-center px-4 transition-all duration-500 hover:scale-105 active:scale-95 border border-[#c5a059]/20">
+    <img src="https://images.pexels.com/photos/1334597/pexels-photo-1334597.jpeg?auto=compress&cs=tinysrgb&w=400" class="absolute inset-0 w-full h-full object-cover opacity-20 transition-transform duration-700 group-hover:scale-125">
+    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
+    <i class="fas fa-tablet-alt relative z-10 w-6 text-[#c5a059]"></i>
     <span class="relative z-10 text-[10px] font-black text-white uppercase tracking-[0.2em] italic ml-3">iPads</span>
 </button>
 
-           <button onclick="filtrarCategoriaVitrine('tablet'); toggleMenuLateral()" class="relative overflow-hidden group w-full h-14 rounded-xl flex items-center px-4 transition-all duration-500 hover:scale-105 active:scale-95 border border-white/5">
-    <img src="https://images.pexels.com/photos/2647376/pexels-photo-2647376.jpeg?auto=compress&cs=tinysrgb&w=400" class="absolute inset-0 w-full h-full object-cover opacity-40 transition-transform duration-700 group-hover:scale-125">
-    <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent"></div>
-    <i class="fas fa-tablet relative z-10 w-6 text-slate-500"></i>
+           <button onclick="filtrarCategoriaVitrine('tablet'); toggleMenuLateral()" class="relative overflow-hidden group w-full h-14 rounded-xl flex items-center px-4 transition-all duration-500 hover:scale-105 active:scale-95 border border-[#c5a059]/20">
+    <img src="https://images.pexels.com/photos/2647376/pexels-photo-2647376.jpeg?auto=compress&cs=tinysrgb&w=400" class="absolute inset-0 w-full h-full object-cover opacity-20 transition-transform duration-700 group-hover:scale-125">
+    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
+    <i class="fas fa-tablet relative z-10 w-6 text-[#c5a059]"></i>
     <span class="relative z-10 text-[10px] font-black text-white uppercase tracking-[0.2em] italic ml-3">Tablets</span>
 </button>
 
-                <button onclick="filtrarCategoriaVitrine('watch'); toggleMenuLateral()" class="relative overflow-hidden group w-full h-14 rounded-xl flex items-center px-4 transition-all duration-500 hover:scale-105 active:scale-95 border border-white/5">
-    <img src="https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?auto=compress&cs=tinysrgb&w=400" class="absolute inset-0 w-full h-full object-cover opacity-40 transition-transform duration-700 group-hover:scale-125">
-    <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent"></div>
-    <i class="fas fa-clock relative z-10 w-6 text-emerald-400"></i>
+                <button onclick="filtrarCategoriaVitrine('watch'); toggleMenuLateral()" class="relative overflow-hidden group w-full h-14 rounded-xl flex items-center px-4 transition-all duration-500 hover:scale-105 active:scale-95 border border-[#c5a059]/20">
+    <img src="https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?auto=compress&cs=tinysrgb&w=400" class="absolute inset-0 w-full h-full object-cover opacity-20 transition-transform duration-700 group-hover:scale-125">
+    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
+    <i class="fas fa-clock relative z-10 w-6 text-[#c5a059]"></i>
     <span class="relative z-10 text-[10px] font-black text-white uppercase tracking-[0.2em] italic ml-3">Apple Watch</span>
 </button>
 
-                <div class="pt-4 pb-2 border-t border-white/5 mt-4">
-                    <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-4">Outras Marcas</p>
+             <div class="pt-4 pb-2 border-t border-[#c5a059]/20 mt-4">
+                    <p class="text-[8px] font-black text-[#c5a059]/60 uppercase tracking-widest mb-4">Outras Marcas</p>
                     
-                    <button onclick="filtrarCategoriaVitrine('xiaomi')" class="w-full flex items-center gap-3 text-slate-300 hover:text-white transition-colors group mb-3">
-                        <div class="w-8 h-8 rounded-lg bg-orange-600/10 flex items-center justify-center group-hover:bg-orange-600 transition-all">
-                            <i class="fas fa-bolt text-xs text-orange-500 group-hover:text-white"></i>
+                    <button onclick="filtrarCategoriaVitrine('xiaomi')" class="w-full flex items-center gap-3 text-white/50 hover:text-[#c5a059] transition-all group mb-3">
+                        <div class="w-8 h-8 rounded-lg bg-white/5 border border-[#c5a059]/20 flex items-center justify-center group-hover:bg-[#c5a059] transition-all">
+                            <i class="fas fa-bolt text-xs text-[#c5a059] group-hover:text-black"></i>
                         </div>
                         <span class="text-[10px] font-black uppercase tracking-widest">Xiaomi</span>
                     </button>
 
-                    <button onclick="filtrarCategoriaVitrine('samsung')" class="w-full flex items-center gap-3 text-slate-300 hover:text-white transition-colors group mb-3">
-                        <div class="w-8 h-8 rounded-lg bg-blue-600/10 flex items-center justify-center group-hover:bg-blue-600 transition-all">
-                            <i class="fas fa-mobile text-xs text-blue-500 group-hover:text-white"></i>
+                    <button onclick="filtrarCategoriaVitrine('samsung')" class="w-full flex items-center gap-3 text-white/50 hover:text-[#c5a059] transition-all group mb-3">
+                        <div class="w-8 h-8 rounded-lg bg-white/5 border border-[#c5a059]/20 flex items-center justify-center group-hover:bg-[#c5a059] transition-all">
+                            <i class="fas fa-mobile text-xs text-[#c5a059] group-hover:text-black"></i>
                         </div>
                         <span class="text-[10px] font-black uppercase tracking-widest">Samsung</span>
                     </button>
-                    
                 </div>
 
-                <button onclick="filtrarCategoriaVitrine('acessorios')" class="w-full flex items-center gap-3 text-slate-300 hover:text-white transition-colors group pt-2">
-                    <div class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center group-hover:bg-indigo-600 transition-all">
-                        <i class="fas fa-headphones text-xs"></i>
+                <button onclick="filtrarCategoriaVitrine('acessorios')" class="w-full flex items-center gap-3 text-white/50 hover:text-[#c5a059] transition-all group pt-2">
+                    <div class="w-8 h-8 rounded-lg bg-white/5 border border-[#c5a059]/20 flex items-center justify-center group-hover:bg-[#c5a059] transition-all">
+                        <i class="fas fa-headphones text-xs text-[#c5a059] group-hover:text-black"></i>
                     </div>
                     <span class="text-[10px] font-black uppercase tracking-widest">Acessórios</span>
                 </button>
             </nav>
         </div>
 
-        <div class="mt-auto border-t border-white/5 pt-6">
-            <a href="login.html" class="flex items-center gap-3 text-indigo-400 hover:text-white transition-all group">
-                <div class="w-10 h-10 rounded-xl bg-indigo-600/10 border border-indigo-600/20 flex items-center justify-center group-hover:bg-indigo-600 transition-all">
-                    <i class="fas fa-user-shield text-sm text-indigo-400 group-hover:text-white"></i>
+        <div class="mt-auto border-t border-[#c5a059]/20 pt-6">
+            <a href="login.html" class="flex items-center gap-3 text-[#c5a059] hover:text-white transition-all group">
+                <div class="w-10 h-10 rounded-xl bg-[#c5a059]/10 border border-[#c5a059]/20 flex items-center justify-center group-hover:bg-[#c5a059] transition-all">
+                    <i class="fas fa-user-shield text-sm text-[#c5a059] group-hover:text-black"></i>
                 </div>
                 <div class="flex flex-col">
-                    <span class="text-[9px] font-black uppercase tracking-tighter opacity-60">Portal</span>
-                    <span class="text-[10px] font-black uppercase tracking-widest leading-none">Gestão Administrativa</span>
+                    <span class="text-[9px] font-black uppercase tracking-tighter text-[#c5a059]/40">Portal</span>
+                    <span class="text-[10px] font-black uppercase tracking-widest leading-none text-white">Gestão Administrativa</span>
                 </div>
             </a>
         </div>
@@ -249,32 +266,30 @@
 
     <div class="bg-site-image"></div>
 
-   <header class="glass-header sticky top-0 z-50 border-b border-slate-200/50">
+   <header class="glass-header sticky top-0 z-50 border-b border-[#c5a059]/20">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <div class="bg-indigo-600 p-2 rounded-xl text-white shadow-lg shadow-indigo-200">
-                    <i class="fas fa-bolt text-sm"></i>
-                </div>
-                <h1 class="text-xl font-black tracking-tighter uppercase italic text-slate-800">A2 <span class="text-indigo-600">TECH</span></h1>
+            <div class="flex items-center gap-3">
+               <img src="logo01.png" alt="A2 Imports" class="h-10 md:h-14 w-auto object-contain rounded-2xl drop-shadow-[0_0_10px_rgba(197,160,89,0.3)]">
+                <h1 class="hidden md:block text-xl font-black tracking-tighter uppercase italic text-white">A2 <span class="text-[#c5a059]">IMPORTS</span></h1>
             </div>
 
             <div class="flex items-center gap-3 md:gap-8">
-          <nav class="hidden lg:flex gap-6 text-[10px] font-black uppercase tracking-widest text-slate-500">
-    <button onclick="filtrarCategoriaVitrine('iphones')" class="hover:text-indigo-600 transition-colors">iPhones</button>
-    <button onclick="filtrarCategoriaVitrine('macbook')" class="hover:text-indigo-600 transition-colors">MacBooks</button>
-    <button onclick="filtrarCategoriaVitrine('ipad')" class="hover:text-indigo-600 transition-colors">iPads</button>
-    <button onclick="filtrarCategoriaVitrine('tablet')" class="hover:text-indigo-600 transition-colors">Tablets</button>
-    <button onclick="filtrarCategoriaVitrine('watch')" class="hover:text-indigo-600 transition-colors">Watch</button>
-    <button onclick="filtrarCategoriaVitrine('samsung')" class="hover:text-indigo-600 transition-colors">Samsung</button>
-    <button onclick="filtrarCategoriaVitrine('xiaomi')" class="hover:text-indigo-600 transition-colors">Xiaomi</button>
+          <nav class="hidden lg:flex gap-6 text-[10px] font-black uppercase tracking-widest text-white/90">
+    <button onclick="filtrarCategoriaVitrine('iphones')" class="hover:text-[#c5a059] transition-colors">iPhones</button>
+    <button onclick="filtrarCategoriaVitrine('macbook')" class="hover:text-[#c5a059] transition-colors">MacBooks</button>
+    <button onclick="filtrarCategoriaVitrine('ipad')" class="hover:text-[#c5a059] transition-colors">iPads</button>
+    <button onclick="filtrarCategoriaVitrine('tablet')" class="hover:text-[#c5a059] transition-colors">Tablets</button>
+    <button onclick="filtrarCategoriaVitrine('watch')" class="hover:text-[#c5a059] transition-colors">Watch</button>
+    <button onclick="filtrarCategoriaVitrine('samsung')" class="hover:text-[#c5a059] transition-colors">Samsung</button>
+    <button onclick="filtrarCategoriaVitrine('xiaomi')" class="hover:text-[#c5a059] transition-colors">Xiaomi</button>
 </nav>
-                <div class="flex items-center gap-2 border-l border-slate-200 pl-4 md:pl-8">
-                    <button onclick="abrirSacola()" class="relative p-2 bg-slate-100 rounded-full w-10 h-10 flex items-center justify-center text-slate-700 hover:bg-indigo-50 transition-all">
-                        <i class="fas fa-shopping-bag"></i>
-                        <span id="cart-count" class="absolute -top-1 -right-1 bg-indigo-600 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border-2 border-white">0</span>
+                <div class="flex items-center gap-2 border-l border-white/10 pl-4 md:pl-8">
+                    <button onclick="abrirSacola()" class="relative p-2 bg-white/5 rounded-full w-10 h-10 flex items-center justify-center text-white hover:bg-[#c5a059] hover:text-black transition-all border border-white/10">
+                        <i class="fas fa-shopping-bag text-sm"></i>
+                        <span id="cart-count" class="absolute -top-1 -right-1 bg-[#c5a059] text-black text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border-2 border-black">0</span>
                     </button>
 
-                    <button onclick="toggleMenuLateral()" class="w-10 h-10 flex items-center justify-center bg-slate-900 rounded-xl text-white hover:bg-indigo-600 transition-all shadow-lg">
+                    <button onclick="toggleMenuLateral()" class="w-10 h-10 flex items-center justify-center bg-[#c5a059] rounded-xl text-black hover:bg-white transition-all shadow-lg">
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
@@ -284,10 +299,10 @@
 
     <main class="max-w-7xl mx-auto px-6 py-8 relative z-10 transition-all duration-300">
         
-    <section id="container-banners" class="mb-8 relative h-[220px] md:h-[400px] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-xl bg-slate-900">
+   <section id="container-banners" class="mb-8 relative h-[220px] md:h-[400px] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl bg-black border border-[#c5a059]/20">
             <div id="wrapper-banners" class="flex h-full transition-transform duration-1000 ease-in-out">
                 <div class="min-w-full h-full flex items-center justify-center text-white p-16">
-                    <p class="text-[10px] font-black uppercase tracking-[5px] animate-pulse">Sincronizando Ofertas...</p>
+                    <p class="text-[10px] font-black uppercase tracking-[5px] animate-pulse text-[#c5a059]">Sincronizando Boutique...</p>
                 </div>
             </div>
             
@@ -295,8 +310,8 @@
         </section>
 
      <div class="flex gap-3 mb-10 overflow-x-auto pb-4 no-scrollbar snap-x">
-            <button onclick="carregarProdutosVitrine()" class="snap-start relative overflow-hidden group min-w-[90px] h-[55px] md:h-[75px] rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-500 hover:scale-105 active:scale-95 animate-in-zoom bg-slate-900">
-                <span class="relative z-10 text-[9px] md:text-[11px] font-black text-white uppercase tracking-widest italic">Todos</span>
+            <button onclick="carregarProdutosVitrine()" class="snap-start relative overflow-hidden group min-w-[90px] h-[55px] md:h-[75px] rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-500 hover:scale-105 active:scale-95 animate-in-zoom bg-black border border-[#c5a059]/40">
+                <span class="relative z-10 text-[9px] md:text-[11px] font-black text-[#c5a059] group-hover:text-white uppercase tracking-widest italic">Todos</span>
             </button>
 
          <button onclick="filtrarCategoriaVitrine('iphones')" class="snap-start relative overflow-hidden group min-w-[90px] h-[55px] md:h-[75px] rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-500 hover:scale-105 active:scale-95 animate-in-zoom">
@@ -344,61 +359,40 @@
             </div>
 
         <div id="container-ver-mais" class="hidden mt-12 flex justify-center">
-            <button onclick="verMaisProdutos()" class="group flex items-center gap-3 bg-white border border-slate-200 px-10 py-5 rounded-2xl shadow-sm hover:shadow-lg hover:border-indigo-600 transition-all duration-500">
-                <span class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 group-hover:text-indigo-600">Explorar Mais Aparelhos</span>
-                <i class="fas fa-plus text-[10px] text-slate-300 group-hover:text-indigo-600 transition-all"></i>
+            <button onclick="verMaisProdutos()" class="group flex items-center gap-3 bg-black border border-[#c5a059]/40 px-10 py-5 rounded-2xl shadow-lg hover:shadow-[#c5a059]/10 hover:border-[#c5a059] transition-all duration-500">
+                <span class="text-[10px] font-black uppercase tracking-[0.2em] text-[#c5a059] group-hover:text-white">Explorar Mais Aparelhos</span>
+                <i class="fas fa-plus text-[10px] text-[#c5a059]/40 group-hover:text-[#c5a059] transition-all"></i>
             </button>
         </div>
 
     </main>
 
-    <section class="max-w-7xl mx-auto px-6 mb-16">
-        <div class="flex items-center justify-between mb-8">
-            <div>
-                <h2 class="text-xl font-black text-slate-800 tracking-tight uppercase italic">Performance <span class="text-indigo-600">em Movimento</span></h2>
-                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Veja os aparelhos reais em mãos</p>
-            </div>
-            <div class="flex gap-2">
-                <button onclick="scrollVideos('esq')" class="w-10 h-10 rounded-xl bg-white border border-slate-100 text-slate-400 hover:text-indigo-600 transition-all shadow-sm flex items-center justify-center">
-                    <i class="fas fa-chevron-left text-xs"></i>
-                </button>
-                <button onclick="scrollVideos('dir')" class="w-10 h-10 rounded-xl bg-white border border-slate-100 text-slate-400 hover:text-indigo-600 transition-all shadow-sm flex items-center justify-center">
-                    <i class="fas fa-chevron-right text-xs"></i>
-                </button>
-            </div>
-        </div>
+   
 
-        <div id="grid-videos-tech" class="flex gap-4 overflow-x-auto pb-6 no-scrollbar scroll-smooth snap-x snap-mandatory">
-            <div class="text-center py-10 w-full text-slate-300 font-bold uppercase text-[10px] tracking-widest">
-                Sincronizando Reels...
-            </div>
-        </div>
-    </section>
-
-    <div id="modal-troca" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md">
-        <div class="bg-white w-full max-w-lg rounded-[2.5rem] overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
-            <div class="p-6 bg-slate-900 text-white flex justify-between items-center">
-                <h3 class="font-black italic uppercase tracking-tighter text-lg">Avaliação de <span class="text-indigo-400">Trade-in</span></h3>
-                <button onclick="fecharModalTroca()" class="text-slate-400 hover:text-white"><i class="fas fa-times text-xl"></i></button>
+  <div id="modal-troca" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+        <div class="glass-base w-full max-w-lg rounded-[2.5rem] shadow-2xl border border-[#c5a059]/30">
+            <div class="p-6 bg-black text-white flex justify-between items-center border-b border-[#c5a059]/10">
+                <h3 class="font-black italic uppercase tracking-tighter text-lg titulo-elite">Avaliação Trade-in</h3>
+                <button onclick="fecharModalTroca()" class="w-10 h-10 rounded-full bg-white/5 text-[#c5a059] hover:bg-[#c5a059] hover:text-black transition-all flex items-center justify-center"><i class="fas fa-times text-xl"></i></button>
             </div>
             
-            <div class="p-8 overflow-y-auto space-y-6 no-scrollbar">
+            <div class="p-8 overflow-y-auto space-y-6 no-scrollbar bg-black">
                 <div>
-                    <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Seu Aparelho Atual</label>
-                    <input type="text" id="troca-atual" placeholder="Ex: iPhone 12 Pro 128GB" class="w-full bg-slate-50 border border-slate-100 p-4 rounded-2xl text-sm outline-none focus:border-indigo-600 transition-all">
+                    <label class="text-[9px] font-black text-[#c5a059] uppercase tracking-widest block mb-2">Seu Aparelho Atual</label>
+                    <input type="text" id="troca-atual" placeholder="Ex: iPhone 12 Pro 128GB" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl text-sm text-white outline-none focus:border-[#c5a059] transition-all">
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Saúde da Bateria</label>
+                        <label class="text-[9px] font-black text-[#c5a059] uppercase tracking-widest block mb-2">Saúde da Bateria</label>
                         <div class="relative">
-                            <input type="number" id="troca-bateria" placeholder="85" class="w-full bg-slate-50 border border-slate-100 p-4 rounded-2xl text-sm outline-none focus:border-indigo-600 transition-all">
-                            <span class="absolute right-4 top-4 text-slate-400 font-bold">%</span>
+                            <input type="number" id="troca-bateria" placeholder="85" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl text-sm text-white outline-none focus:border-[#c5a059] transition-all">
+                            <span class="absolute right-4 top-4 text-[#c5a059] font-bold">%</span>
                         </div>
                     </div>
                     <div>
-                        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Estado Visual</label>
-                        <select id="troca-estado" class="w-full bg-slate-50 border border-slate-100 p-4 rounded-2xl text-sm outline-none focus:border-indigo-600 appearance-none">
+                        <label class="text-[9px] font-black text-[#c5a059] uppercase tracking-widest block mb-2">Estado Visual</label>
+                        <select id="troca-estado" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl text-sm text-white outline-none focus:border-[#c5a059] appearance-none">
                             <option value="Impecável">✨ Impecável</option>
                             <option value="Sinais de uso">👍 Sinais de uso</option>
                             <option value="Tela riscada">⚠️ Tela riscada</option>
@@ -408,85 +402,159 @@
                 </div>
 
                 <div>
-                    <label class="text-[9px] font-black text-indigo-600 uppercase tracking-widest block mb-2">Modelo de Interesse</label>
-                    <input type="text" id="troca-interesse" placeholder="Qual modelo você quer comprar?" class="w-full bg-slate-50 border border-slate-100 p-4 rounded-2xl text-sm outline-none focus:border-indigo-600 transition-all">
+                    <label class="text-[9px] font-black text-[#c5a059] uppercase tracking-widest block mb-2">Modelo de Interesse</label>
+                    <input type="text" id="troca-interesse" placeholder="Qual modelo você quer comprar?" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl text-sm text-white outline-none focus:border-[#c5a059] transition-all">
                 </div>
 
-                <div class="bg-indigo-50 p-4 rounded-2xl border border-indigo-100">
-                    <p class="text-[10px] text-indigo-600 font-bold leading-relaxed italic">
-                        <i class="fas fa-info-circle mr-1"></i> Shark, após clicar no botão abaixo, você será enviado ao WhatsApp. Por favor, **anexe fotos e um vídeo de 10 segundos** do seu aparelho para agilizar o preço final.
+                <div class="bg-[#c5a059]/10 p-4 rounded-2xl border border-[#c5a059]/20">
+                    <p class="text-[10px] text-[#c5a059] font-bold leading-relaxed italic">
+                        <i class="fas fa-info-circle mr-1"></i> Shark, após clicar no botão abaixo, você será enviado ao WhatsApp. Por favor, **anexe fotos e um vídeo de 10 segundos** do seu aparelho.
                     </p>
                 </div>
 
-                <button onclick="enviarAvaliacaoWhats()" class="w-full bg-indigo-600 text-white py-5 rounded-2xl font-black uppercase tracking-widest shadow-lg shadow-indigo-100 hover:bg-slate-900 transition-all">
+                <button onclick="enviarAvaliacaoWhats()" class="w-full bg-[#c5a059] text-black py-5 rounded-2xl font-black uppercase tracking-widest shadow-lg shadow-[#c5a059]/20 hover:bg-white transition-all">
                     Gerar Minha Avaliação
                 </button>
             </div>
         </div>
     </div>
 
+    <section class="max-w-7xl mx-auto px-6 mb-24">
+        <div class="mb-10 text-center md:text-left">
+            <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-[#c5a059] mb-2">Social Proof</h2>
+            <h3 class="text-3xl font-black italic uppercase tracking-tighter titulo-elite">Momentos Incríveis</h3>
+            <p class="text-[10px] text-white/40 font-black uppercase tracking-widest mt-1">Experiências reais capturadas em mãos</p>
+        </div>
+
+        <div id="grid-videos-reels" class="flex gap-5 overflow-x-auto pb-10 no-scrollbar snap-x snap-mandatory -mx-6 px-6">
+            <div class="text-center py-20 w-full text-slate-300 font-bold uppercase text-[10px] tracking-widest">
+                Sincronizando Reels...
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-6 mb-32">
+        <div class="mb-12 text-center">
+            <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-[#c5a059] mb-2">Comunidade Ativa</h2>
+            <h3 class="text-3xl font-black italic uppercase tracking-tighter titulo-elite">Nossa História</h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="card-produto p-8 flex flex-col gap-4 hover:scale-100">
+                <div class="flex gap-1 text-amber-400 text-[10px]">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-xs font-bold text-slate-600 leading-relaxed italic">"Atendimento impecável! O iPhone veio lacrado e o suporte do Shark na transferência de dados foi diferencial."</p>
+                <div class="flex items-center gap-3 mt-4">
+                    <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-black text-[10px]">MA</div>
+                    <div>
+                        <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-900">Mateus Andrade</h4>
+                        <span class="text-[8px] font-bold text-slate-400 uppercase">iPhone 15 Pro Max</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-produto p-8 flex flex-col gap-4 hover:scale-100">
+                <div class="flex gap-1 text-amber-400 text-[10px]">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-xs font-bold text-slate-600 leading-relaxed italic">"Melhor avaliação de troca da região. Saí com meu MacBook novo em menos de 30 minutos. Recomendo demais!"</p>
+                <div class="flex items-center gap-3 mt-4">
+                    <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-black text-[10px]">JS</div>
+                    <div>
+                        <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-900">Juliana Silva</h4>
+                        <span class="text-[8px] font-bold text-slate-400 uppercase">MacBook Air M2</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-produto p-8 flex flex-col gap-4 hover:scale-100">
+                <div class="flex gap-1 text-amber-400 text-[10px]">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-xs font-bold text-slate-600 leading-relaxed italic">"Produtos de extrema qualidade. O cuidado com a embalagem e o pós-venda mostram o nível da A2 Tech."</p>
+                <div class="flex items-center gap-3 mt-4">
+                    <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-black text-[10px]">RC</div>
+                    <div>
+                        <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-900">Ricardo Costa</h4>
+                        <span class="text-[8px] font-bold text-slate-400 uppercase">Apple Watch Ultra</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     
  <section class="mt-32 px-6">
     <div class="max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-white p-8 md:p-12 rounded-[3.5rem] border border-slate-100 shadow-2xl">
+       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center glass-base p-8 md:p-12 rounded-[3.5rem] border border-[#c5a059]/20 shadow-2xl">
             
-            <div class="h-[400px] w-full rounded-[2.5rem] overflow-hidden shadow-inner border border-slate-50 relative group">
+            <div class="h-[400px] w-full rounded-[2.5rem] overflow-hidden shadow-inner border border-white/5 relative group">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3521.8234658055636!2d-49.0066!3d-28.47!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9521369f6e07663f%3A0xc39958e0be29c787!2sAv.%20Marcolino%20Martins%20Cabral%2C%202157%20-%20Vila%20Moema%2C%20Tubar%C3%A3o%20-%20SC%2C%2088705-001!5e0!3m2!1spt-BR!2sbr!4v1711234567890!5m2!1spt-BR!2sbr"
-                    class="w-full h-full border-0 grayscale group-hover:grayscale-0 transition-all duration-1000" 
+                    class="w-full h-full border-0 grayscale invert-[0.9] hue-rotate-[180deg] group-hover:grayscale-0 group-hover:invert-0 transition-all duration-1000" 
                     allowfullscreen="" 
                     loading="lazy">
                 </iframe>
-                <div class="absolute inset-0 pointer-events-none border-[12px] border-white/10 rounded-[2.5rem]"></div>
+                <div class="absolute inset-0 pointer-events-none border-[12px] border-[#c5a059]/10 rounded-[2.5rem]"></div>
             </div>
 
-            <div class="space-y-8 pl-0 md:pl-6">
-                <div>
-                    <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-indigo-600 mb-2">Sede Oficial</h2>
-                    <h3 class="text-4xl font-black text-slate-900 italic uppercase tracking-tighter">A2 Tech <span class="text-indigo-600">Elite</span></h3>
-                </div>
+           <div class="space-y-8 pl-0 md:pl-6">
+                   <div>
+                        <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-[#c5a059] mb-2">Localização Estratégica</h2>
+                        <h3 class="text-4xl font-black italic uppercase tracking-tighter titulo-elite">Sede A2 Imports</h3>
+                    </div>
 
-                <div class="space-y-4">
-                    <p class="text-xs font-bold text-slate-500 leading-relaxed uppercase tracking-widest">
-                        <i class="fas fa-map-marker-alt text-indigo-600 mr-2"></i>
-                        Av. Marcolino Martins Cabral, 2157<br>
-                        Vila Moema, Tubarão - SC
-                    </p>
-                    <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">
-                        <i class="fas fa-clock text-indigo-600 mr-2"></i>
-                        Seg a Sex: 09h - 18:30h | Sáb: 09h - 13h
-                    </p>
-                </div>
+                    <div class="space-y-4">
+                        <p class="text-xs font-bold text-white/80 leading-relaxed uppercase tracking-widest">
+                            <i class="fas fa-map-marker-alt text-[#c5a059] mr-2"></i>
+                            Av. Marcolino Martins Cabral, 2157<br>
+                            Vila Moema, Tubarão - SC
+                        </p>
+                        <p class="text-xs font-bold text-white/80 uppercase tracking-widest">
+                            <i class="fas fa-clock text-[#c5a059] mr-2"></i>
+                            Seg a Sex: 09h - 18:30h | Sáb: 09h - 13h
+                        </p>
+                    </div>
 
-                <a href="https://www.google.com/maps/dir//Av.+Marcolino+Martins+Cabral,+2157+-+Vila+Moema,+Tubar%C3%A3o+-+SC" target="_blank" class="inline-flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.2em] text-white bg-slate-900 px-10 py-5 rounded-2xl hover:bg-indigo-600 transition-all duration-500">
-                    Traçar Rota <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
+                    <a href="https://www.google.com/maps/dir//Av.+Marcolino+Martins+Cabral,+2157+-+Vila+Moema,+Tubar%C3%A3o+-+SC" target="_blank" class="inline-flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.2em] text-black bg-[#c5a059] px-10 py-5 rounded-2xl hover:bg-white transition-all duration-500 shadow-lg shadow-[#c5a059]/20">
+                        Traçar Rota <i class="fas fa-location-arrow"></i>
+                    </a>
+                </div>
         </div>
     </div>
 </section>
 
-  <footer class="bg-white py-10 border-t border-slate-50 mt-32">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+<footer class="glass-base py-10 border-t border-[#c5a059]/20 mt-32">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-10">
         
-        <div class="flex items-center gap-3">
-            <div class="bg-indigo-600 w-8 h-8 rounded-lg flex items-center justify-center text-white text-[10px]">
-                <i class="fas fa-bolt"></i>
-            </div>
-            <h2 class="text-sm font-black tracking-tighter uppercase italic text-slate-900">A2 <span class="text-indigo-600">TECH ELITE</span></h2>
+        <div class="flex flex-col items-center md:items-start gap-2 text-center md:text-left flex-1">
+            <h2 class="text-xl font-black tracking-tighter uppercase italic titulo-elite">A2 IMPORTS</h2>
+            <p class="text-[9px] md:text-[10px] font-bold text-white/50 uppercase tracking-widest leading-relaxed max-w-[250px]">
+                Nossa missão é disponibilizar o que tem de melhor a cada um de nossos clientes!
+            </p>
         </div>
 
-        <nav class="flex gap-8 text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">
-            <a href="#vitrine" class="hover:text-indigo-600 transition-all">iPhones</a>
-            <a href="#grid-videos-tech" class="hover:text-indigo-600 transition-all">Seminovos</a>
-        </nav>
-
-        <div class="flex items-center gap-8">
-            <p class="text-[9px] font-black text-slate-200 uppercase tracking-widest">A2 Shark © 2026</p>
-            <div class="flex gap-4">
-                <a href="#" class="text-slate-300 hover:text-indigo-600 transition-all"><i class="fab fa-instagram text-sm"></i></a>
-                <a href="#" class="text-slate-300 hover:text-indigo-600 transition-all"><i class="fab fa-whatsapp text-sm"></i></a>
-            </div>
+        <div class="flex flex-col items-center text-center px-4 border-x border-white/5 hidden md:flex">
+            <span class="text-[7px] font-black text-white/30 uppercase tracking-[0.3em] mb-1">Engenharia Digital</span>
+            <p class="text-[9px] font-black uppercase tracking-[0.2em] titulo-elite italic">
+                Desenvolvido por A2 Shark Performance
+            </p>
         </div>
+
+        <div class="flex flex-col items-center md:items-end gap-4 flex-1">
+            <div class="flex gap-5">
+                <a href="#" class="text-white/50 hover:text-[#c5a059] transition-all duration-300">
+                    <i class="fab fa-instagram text-lg"></i>
+                </a>
+                <a href="#" class="text-white/50 hover:text-[#c5a059] transition-all duration-300">
+                    <i class="fab fa-facebook text-lg"></i>
+                </a>
+            </div>
+            <p class="text-[8px] font-black text-white/30 uppercase tracking-widest">
+                2026 A2 Imports - Todos os direitos reservados
+            </p>
+        </div>
+        
     </div>
 </footer>
 
@@ -503,28 +571,28 @@
             exibidos.forEach((p) => {
                 const seloCondicao = p.condicao === 'novo' ? 'LACRADO' : (p.condicao === 'vitrine' ? 'VITRINE' : 'SEMINOVO');
 
-                vitrine.innerHTML += `
-                    <div class="card-produto group relative p-3 md:p-4 shadow-lg shadow-slate-200/30 flex flex-col h-full bg-white/60 backdrop-blur-md border border-white/40 rounded-[1.5rem] md:rounded-[2rem]">
+              vitrine.innerHTML += `
+    <div class="card-produto group relative p-3 md:p-4 shadow-xl flex flex-col h-full rounded-[1.5rem] md:rounded-[2rem]">
                         <div class="absolute top-2 left-2 z-10">
-                            <span class="bg-slate-900/80 backdrop-blur-sm text-white text-[6px] md:text-[7px] font-black px-2 py-1 rounded-full tracking-widest uppercase">${seloCondicao}</span>
+                            <span class="bg-[#c5a059] text-black text-[6px] md:text-[7px] font-black px-2 py-1 rounded-full tracking-widest uppercase shadow-lg font-black">${seloCondicao}</span>
                         </div>
-                        <div onclick='abrirModalProduto(${JSON.stringify(p).replace(/'/g, "&apos;")})' class="relative h-28 md:h-40 w-full mb-2 overflow-hidden rounded-[1rem] md:rounded-[1.5rem] bg-slate-50/50 flex items-center justify-center cursor-zoom-in">
-                            <img src="${p.imagem}" class="max-h-20 md:max-h-32 max-w-[85%] object-contain group-hover:scale-110 transition-transform duration-500">
+                        <div onclick='abrirModalProduto(${JSON.stringify(p).replace(/'/g, "&apos;")})' class="relative h-28 md:h-40 w-full mb-2 overflow-hidden rounded-[1rem] md:rounded-[1.5rem] bg-white/5 flex items-center justify-center cursor-zoom-in border border-white/5">
+                            <img src="${p.imagem}" class="max-h-20 md:max-h-32 max-w-[85%] object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]">
                         </div>
-                        <div class="flex-1 space-y-1 px-1">
-                            <h3 class="text-[10px] md:text-[12px] font-extrabold text-slate-800 uppercase tracking-tight leading-tight line-clamp-1">${p.nome}</h3>
+                        <div class="flex-1 space-y-1 px-1 text-left">
+                            <h3 class="text-[10px] md:text-[12px] font-extrabold text-white uppercase tracking-tight leading-tight line-clamp-1">${p.nome}</h3>
                             <div class="flex flex-wrap gap-1 mb-1">
-                                <span class="text-[7px] md:text-[8px] font-bold bg-indigo-50 text-indigo-600 px-1.5 py-0.5 rounded-md uppercase">${p.capacidade}</span>
-                                ${p.saude_bateria ? `<span class="text-[7px] md:text-[8px] font-bold bg-emerald-50 text-emerald-600 px-1.5 py-0.5 rounded-md">🔋 ${p.saude_bateria}%</span>` : ''}
+                                <span class="text-[7px] md:text-[8px] font-bold bg-white/5 text-[#c5a059] border border-[#c5a059]/30 px-1.5 py-0.5 rounded-md uppercase">${p.capacidade}</span>
+                                ${p.saude_bateria ? `<span class="text-[7px] md:text-[8px] font-bold bg-white/5 text-emerald-400 border border-emerald-400/20 px-1.5 py-0.5 rounded-md">🔋 ${p.saude_bateria}%</span>` : ''}
                             </div>
-                            <p class="text-[12px] md:text-[14px] font-black text-indigo-600 tracking-tighter">R$ ${parseFloat(p.preco).toLocaleString('pt-BR')}</p>
+                            <p class="text-[12px] md:text-[14px] font-black text-[#c5a059] tracking-tighter">R$ ${parseFloat(p.preco).toLocaleString('pt-BR')}</p>
                         </div>
-                        <div class="mt-2 pt-2 border-t border-slate-100/50">
-                            <button onclick="adicionarAoCarrinho(${p.id})" class="w-full bg-slate-900 text-white py-2 md:py-3 rounded-lg md:rounded-xl font-black uppercase text-[7px] md:text-[8px] tracking-widest hover:bg-indigo-600 transition-all flex items-center justify-center gap-2">
-                                ADICIONAR <i class="fas fa-plus text-[6px]"></i>
+                        <div class="mt-2 pt-2 border-t border-white/5">
+                            <button onclick="adicionarAoCarrinho(${p.id})" class="w-full bg-[#c5a059] text-black py-2 md:py-3 rounded-lg md:rounded-xl font-black uppercase text-[7px] md:text-[8px] tracking-widest hover:bg-white transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#c5a059]/10">
+                                RESERVAR <i class="fas fa-chevron-right text-[6px]"></i>
                             </button>
                         </div>
-                    </div>
+    </div>
                 `;
             });
 
@@ -536,6 +604,27 @@
                 btnVerMais.classList.add("hidden");
             }
         }
+
+        // MOTOR DE ARRANQUE ÚNICO - A2 IMPORTS
+        window.onload = async () => {
+            console.log("A2 Imports: Iniciando sistemas...");
+            
+            // 1. Ressuscita o carrinho antes de qualquer coisa
+            carregarCarrinhoSalvo(); 
+            
+            // 2. Carrega API, Banners e Vídeos
+            try {
+                await Promise.all([
+                    carregarProdutosVitrine(),
+                    carregarBannersD1(),
+                    carregarVideosTech()
+                ]);
+            } catch (e) {
+                console.error("Erro no carregamento inicial:", e);
+            }
+            
+            console.log("A2 Imports: Pronto para vender!");
+        };
         
 
         // Função Shark Elite: aumenta o limite e re-renderiza a lista que já estava na tela
@@ -549,9 +638,23 @@ const API_URL = "https://a2-tech-elite-worker.web-br.workers.dev";
 let limiteExibicao = 8; // Shark, começamos mostrando 8 produtos para o site carregar voando
 // --- MOTOR DE VENDAS SHARK ---
 let carrinho = [];
-let listaAtualShark = []; // Shark, essa variável guarda o que está na tela agora
+let listaAtualShark = []; 
 
-// Função para adicionar o iPhone à sacola
+// Shark, recupera os itens salvos assim que o site abre
+function carregarCarrinhoSalvo() {
+    const salvo = localStorage.getItem('a2_imports_cart');
+    if (salvo) {
+        carrinho = JSON.parse(salvo);
+        atualizarInterfaceSacola();
+    }
+}
+
+// Shark, salva na memória do navegador a cada mudança
+function persistirCarrinho() {
+    localStorage.setItem('a2_imports_cart', JSON.stringify(carrinho));
+    atualizarInterfaceSacola();
+}
+
 async function adicionarAoCarrinho(id) {
     try {
         const response = await fetch(`${API_URL}/produtos`);
@@ -560,12 +663,17 @@ async function adicionarAoCarrinho(id) {
 
         if (produto) {
             carrinho.push(produto);
-            atualizarInterfaceSacola();
-            abrirSacola(); // Abre automaticamente para o cliente ver que funcionou
+            persistirCarrinho(); // Shark, isso aqui salva no navegador!
+            abrirSacola(); 
         }
     } catch (error) {
         console.error("Erro ao adicionar item:", error);
     }
+}
+
+function removerDoCarrinho(index) {
+    carrinho.splice(index, 1);
+    persistirCarrinho(); // Shark, isso aqui atualiza o backup!
 }
 
 // Atualiza o contador de itens e a lista visual
@@ -587,16 +695,18 @@ function atualizarInterfaceSacola() {
     }
 
     let total = 0;
-    container.innerHTML = carrinho.map((item, index) => {
+   container.innerHTML = carrinho.map((item, index) => {
         total += parseFloat(item.preco);
         return `
-            <div class="flex items-center gap-4 bg-slate-50 p-4 rounded-3xl border border-slate-100 relative group">
-                <img src="${item.imagem}" class="w-16 h-16 object-contain">
-                <div class="flex-1">
-                    <h4 class="text-[10px] font-black text-slate-900 uppercase tracking-tight">${item.nome}</h4>
-                    <p class="text-[10px] font-black text-indigo-600 mt-1">R$ ${parseFloat(item.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+            <div class="flex items-center gap-4 bg-white/5 p-4 rounded-3xl border border-[#c5a059]/10 relative group hover:bg-white/10 hover:border-[#c5a059]/30 transition-all">
+                <div class="w-16 h-16 bg-white/5 rounded-2xl p-2 flex items-center justify-center border border-white/5">
+                    <img src="${item.imagem}" class="w-full h-full object-contain drop-shadow-lg">
                 </div>
-                <button onclick="removerDoCarrinho(${index})" class="text-slate-300 hover:text-red-500 transition-colors">
+                <div class="flex-1">
+                    <h4 class="text-[10px] font-black text-white uppercase tracking-tight leading-tight">${item.nome}</h4>
+                    <p class="text-[10px] font-black text-[#c5a059] mt-1 italic">R$ ${parseFloat(item.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+                </div>
+                <button onclick="removerDoCarrinho(${index})" class="w-10 h-10 flex items-center justify-center rounded-xl bg-black text-[#c5a059]/30 hover:text-red-500 hover:bg-red-500/10 transition-all">
                     <i class="fas fa-trash-alt text-xs"></i>
                 </button>
             </div>
@@ -611,7 +721,6 @@ function atualizarInterfaceSacola() {
 async function finalizarPedidoWhats() {
     if (carrinho.length === 0) return alert("Sua sacola está vazia, Shark!");
 
-    // 1. Busca o número oficial no D1 (ou usa o padrão de segurança)
     let numeroWhats = "5548999999999"; 
     try {
         const res = await fetch(`${API_URL}/config/1`);
@@ -619,7 +728,6 @@ async function finalizarPedidoWhats() {
         if(config && config.whats_vendas) numeroWhats = config.whats_vendas.replace(/\D/g, '');
     } catch (e) { console.error("Erro ao buscar número:", e); }
 
-    // 2. Monta a lista de desejos formatada
     let listaItens = "";
     let total = 0;
     carrinho.forEach((item, index) => {
@@ -627,24 +735,26 @@ async function finalizarPedidoWhats() {
         total += parseFloat(item.preco);
     });
 
-    const msg = `🚀 *NOVA SOLICITAÇÃO - A2 TECH ELITE* 🚀\n\n` +
-                `Olá! Selecionei estes aparelhos no site e gostaria de verificar a disponibilidade:\n\n` +
+    const msg = `🚀 *SOLICITAÇÃO DE RESERVA - A2 IMPORTS* 🚀\n\n` +
+                `Olá! Selecionei estes aparelhos no seu site e gostaria de verificar a disponibilidade:\n\n` +
                 `${listaItens}\n` +
                 `💰 *VALOR TOTAL:* R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}\n\n` +
                 `_Aguardo o retorno para fecharmos!_`;
 
     const url = `https://wa.me/${numeroWhats}?text=${encodeURIComponent(msg)}`;
     
-    // 3. Abre o WhatsApp e limpa a sacola para uma nova experiência
     window.open(url, '_blank');
+    
+    // Shark, limpa o estado e o backup do navegador após a venda
     carrinho = [];
+    localStorage.removeItem('a2_imports_cart'); 
     atualizarInterfaceSacola();
     fecharSacola();
 }
 
 function removerDoCarrinho(index) {
     carrinho.splice(index, 1);
-    atualizarInterfaceSacola();
+    persistirCarrinho(); // Shark, atualiza o LocalStorage automaticamente
 }
 
         async function carregarProdutosVitrine() {
@@ -663,14 +773,11 @@ function removerDoCarrinho(index) {
             }
         }
 
-       window.onload = async () => {
-            await carregarProdutosVitrine();
-            await carregarBannersD1(); // Agora o banner será chamado
-            await carregarVideosTech();
-        };
+      
 
         // --- FUNÇÕES DE LEAD (AVALIAÇÃO DE TROCA) ---
-        function abrirModalTroca() {
+      function abrirModalTroca() {
+            registrarEstadoModal(); // Shark, registra no histórico do celular
             document.getElementById("modal-troca").classList.remove("hidden");
             document.body.style.overflow = "hidden";
         }
@@ -696,7 +803,7 @@ function removerDoCarrinho(index) {
                 if(config && config.whats_vendas) numeroWhats = config.whats_vendas.replace(/\D/g, '');
             } catch (e) { console.error("Erro ao buscar número:", e); }
 
-            const msg = `🔥 *SOLICITAÇÃO DE AVALIAÇÃO (TRADE-IN)* 🔥\n\n` +
+           const msg = `🔥 *SOLICITAÇÃO DE AVALIAÇÃO - A2 IMPORTS* 🔥\n\n` +
                         `*Meu Aparelho:* ${atual}\n` +
                         `*Saúde da Bateria:* ${bateria}%\n` +
                         `*Estado Visual:* ${estado}\n` +
@@ -709,35 +816,29 @@ function removerDoCarrinho(index) {
         }
 
         // --- GALERIA DE VÍDEOS TECH (SEM TELA PRETA) ---
-        async function carregarVideosTech() {
-            const container = document.getElementById("grid-videos-tech");
+       async function carregarVideosTech() {
+            const container = document.getElementById("grid-videos-reels");
             try {
                 const res = await fetch(`${API_URL}/videos-tech`);
                 const videos = await res.json();
 
                 if (!videos || videos.length === 0) {
-                    container.innerHTML = "";
                     container.parentElement.classList.add("hidden");
                     return;
                 }
 
-                container.innerHTML = videos.map(v => `
-                    <div class="snap-start shrink-0 w-[75%] sm:w-[45%] md:w-[22%] group px-2">
-                        <div onclick="abrirVideoElite('${v.video_url}')" class="relative aspect-[9/16] rounded-[3.5rem] overflow-hidden shadow-2xl cursor-pointer border-[6px] border-white hover:border-indigo-600 transition-all duration-500 hover:scale-[1.03]">
+               container.innerHTML = videos.map(v => `
+                    <div class="snap-center shrink-0 w-[280px] md:w-[320px] group px-2">
+                        <div onclick="abrirVideoElite('${v.video_url}')" class="relative aspect-[9/16] rounded-[3rem] overflow-hidden shadow-2xl cursor-pointer border-[2px] border-[#c5a059]/20 hover:border-[#c5a059] transition-all duration-500 bg-black">
                             <video 
                                 src="${v.video_url}" 
-                                class="w-full h-full object-cover" 
-                                muted autoplay loop playsinline preload="auto"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-700" 
+                                muted autoplay loop playsinline preload="metadata"
                             ></video>
-                            
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent flex flex-col justify-end p-8">
-                                <p class="text-white text-[10px] font-black uppercase tracking-[0.2em] leading-tight drop-shadow-lg">
-                                    ${v.titulo || 'Review Elite'}
-                                </p>
-                                <div class="mt-4 flex items-center gap-2 text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                    <i class="fas fa-play text-[8px]"></i>
-                                    <span class="text-[8px] font-black uppercase tracking-widest">Assistir Agora</span>
-                                </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex flex-col justify-end p-8">
+                                <span class="text-[#c5a059] text-[10px] font-black uppercase tracking-[0.3em] drop-shadow-2xl">
+                                    ${v.titulo || 'Elite Experience'}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -752,15 +853,11 @@ function removerDoCarrinho(index) {
             c.scrollBy({ left: dir === 'dir' ? amt : -amt, behavior: 'smooth' });
         }
 
-        // Adiciona o gatilho de carga inicial
-        const originalOnload = window.onload;
-        window.onload = async () => {
-            if(originalOnload) await originalOnload();
-            await carregarVideosTech();
-        };
+        
 
       // --- MOTOR DE VÍDEO STORY COM SOM - A2 TECH ELITE ---
         function abrirVideoElite(url) {
+            registrarEstadoModal(); // Shark, registra no histórico do celular
             fecharVideoElite(); // Limpeza de segurança
 
             const overlay = document.createElement("div");
@@ -800,6 +897,7 @@ function removerDoCarrinho(index) {
 
         // --- CONTROLE DA SACOLA ELITE ---
 function abrirSacola() {
+    registrarEstadoModal(); // Shark, registra no histórico do celular
     document.getElementById("sacola-drawer").classList.remove("translate-x-full");
     document.getElementById("sacola-overlay").classList.remove("hidden");
     setTimeout(() => {
@@ -910,13 +1008,17 @@ async function carregarBannersD1() {
         }
 
         // --- CONTROLE DO MENU LATERAL SHARK ---
-        function toggleMenuLateral() {
+       function toggleMenuLateral() {
             const sidebar = document.getElementById("sidebar-elite");
             const overlay = document.getElementById("menu-overlay");
             
+            // Shark, se for abrir o menu, registra o estado no histórico
+            if (sidebar.classList.contains("-translate-x-full")) {
+                registrarEstadoModal();
+            }
+            
             sidebar.classList.toggle("-translate-x-full");
             
-            // Cria um overlay escuro se não existir, para fechar ao clicar fora
             if (!overlay) {
                 const newOverlay = document.createElement("div");
                 newOverlay.id = "menu-overlay";
@@ -928,7 +1030,8 @@ async function carregarBannersD1() {
             }
         }
 
-       function abrirModalProduto(p) {
+      function abrirModalProduto(p) {
+    registrarEstadoModal(); // Shark, registra no histórico do celular
     const modal = document.getElementById('modal-detalhe');
     document.getElementById('modal-img').src = p.imagem;
     document.getElementById('modal-nome').innerText = p.nome;
@@ -958,33 +1061,33 @@ function fecharModalProduto() {
 }
     </script>
 
-    <div id="sacola-drawer" class="fixed inset-y-0 right-0 w-full md:w-[450px] bg-white/95 backdrop-blur-2xl shadow-[-20px_0_50px_rgba(0,0,0,0.1)] z-[100] translate-x-full transition-transform duration-700 ease-in-out border-l border-slate-100 flex flex-col">
+ <div id="sacola-drawer" class="fixed inset-y-0 right-0 w-full md:w-[450px] bg-black z-[100] translate-x-full transition-transform duration-700 ease-in-out flex flex-col border-l border-[#c5a059]/20 shadow-[-20px_0_100px_rgba(0,0,0,0.8)]">
     
-    <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-900 text-white">
+    <div class="p-8 border-b border-[#c5a059]/10 flex justify-between items-center bg-white/5 text-white">
         <div>
-            <h3 class="text-xl font-black italic uppercase tracking-tighter">Minha <span class="text-indigo-400">Escolha</span></h3>
-            <p class="text-[9px] font-bold uppercase tracking-[3px] text-slate-400 mt-1">Sua seleção de elite</p>
+            <h3 class="text-xl font-black italic uppercase tracking-tighter titulo-elite">Minha Escolha</h3>
+            <p class="text-[9px] font-bold uppercase tracking-[3px] text-[#c5a059]/60 mt-1">Sua seleção de elite</p>
         </div>
-        <button onclick="fecharSacola()" class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all">
+        <button onclick="fecharSacola()" class="w-12 h-12 rounded-2xl bg-black border border-[#c5a059]/20 flex items-center justify-center text-[#c5a059] hover:bg-[#c5a059] hover:text-black transition-all">
             <i class="fas fa-times text-xl"></i>
         </button>
     </div>
 
     <div id="itens-sacola" class="flex-1 overflow-y-auto p-8 space-y-6 no-scrollbar">
         <div class="text-center py-20">
-            <i class="fas fa-shopping-bag text-4xl text-slate-100 mb-4"></i>
-            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Sua sacola está vazia.</p>
+            <i class="fas fa-shopping-bag text-4xl text-white/10 mb-4"></i>
+            <p class="text-xs font-bold text-white/20 uppercase tracking-widest">Sua sacola está vazia.</p>
         </div>
     </div>
 
-    <div class="p-8 border-t border-slate-100 space-y-6 bg-slate-50/50">
+    <div class="p-8 border-t border-[#c5a059]/10 space-y-6 bg-black">
         <div class="flex justify-between items-end">
-            <span class="text-[10px] font-black uppercase text-slate-400 tracking-widest">Total Estimado</span>
-            <span id="total-sacola" class="text-3xl font-black text-slate-900 tracking-tighter italic">R$ 0,00</span>
+            <span class="text-[10px] font-black uppercase text-[#c5a059]/40 tracking-widest">Total Estimado</span>
+            <span id="total-sacola" class="text-3xl font-black text-white tracking-tighter italic">R$ 0,00</span>
         </div>
         
-        <button onclick="finalizarPedidoWhats()" class="w-full bg-indigo-600 text-white py-6 rounded-[2rem] font-black uppercase text-xs tracking-[0.3em] shadow-2xl shadow-indigo-100 hover:bg-slate-900 transition-all duration-500 flex items-center justify-center gap-3">
-            RESERVAR PELO WHATSAPP <i class="fab fa-whatsapp"></i>
+        <button onclick="finalizarPedidoWhats()" class="w-full bg-[#c5a059] text-black py-6 rounded-[2rem] font-black uppercase text-xs tracking-[0.3em] shadow-2xl shadow-[#c5a059]/20 hover:bg-white transition-all duration-500 flex items-center justify-center gap-3">
+            FINALIZAR PEDIDO <i class="fab fa-whatsapp"></i>
         </button>
         
         <p class="text-center text-[8px] font-bold text-slate-400 uppercase tracking-widest">
@@ -995,28 +1098,28 @@ function fecharModalProduto() {
 
 <div id="sacola-overlay" onclick="fecharSacola()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[90] hidden opacity-0 transition-opacity duration-500"></div>
 
-<div id="modal-detalhe" class="hidden fixed inset-0 z-[150] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-sm">
-    <div class="bg-white w-full max-w-sm rounded-[2.5rem] overflow-hidden shadow-2xl relative animate-in fade-in zoom-in duration-300">
-        <button onclick="fecharModalProduto()" class="absolute top-5 right-5 w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center text-slate-500 hover:bg-red-500 hover:text-white transition-all z-20">
-            <i class="fas fa-times text-xs"></i>
+<div id="modal-detalhe" class="hidden fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/95 backdrop-blur-md">
+    <div class="glass-base w-full max-w-sm rounded-[3rem] overflow-hidden shadow-2xl relative animate-in fade-in zoom-in duration-300 border border-[#c5a059]/30">
+        <button onclick="fecharModalProduto()" class="absolute top-6 right-6 w-10 h-10 bg-white/5 rounded-full flex items-center justify-center text-[#c5a059] hover:bg-[#c5a059] hover:text-black transition-all z-20">
+            <i class="fas fa-times text-sm"></i>
         </button>
         
-        <div class="p-6 flex flex-col items-center">
-            <div class="w-full aspect-square bg-slate-50 rounded-[2rem] flex items-center justify-center mb-4 p-4">
-                <img id="modal-img" src="" class="max-h-56 object-contain">
+        <div class="p-8 flex flex-col items-center">
+            <div class="w-full aspect-square bg-white/5 rounded-[2.5rem] flex items-center justify-center mb-6 p-6 border border-white/10 shadow-inner">
+                <img id="modal-img" src="" class="max-h-60 object-contain drop-shadow-2xl">
             </div>
             
-            <h3 id="modal-nome" class="text-lg font-black text-slate-900 uppercase tracking-tighter text-center leading-tight mb-1"></h3>
-            <div id="modal-badges" class="flex gap-2 mb-4"></div>
+            <h3 id="modal-nome" class="text-xl font-black uppercase tracking-tighter text-center leading-tight mb-2 italic titulo-elite"></h3>
+            <div id="modal-badges" class="flex gap-2 mb-5"></div>
             
-            <p id="modal-desc" class="text-[10px] text-slate-400 font-bold text-center mb-6 leading-relaxed px-2"></p>
+            <p id="modal-desc" class="text-[11px] text-white/40 font-bold text-center mb-8 leading-relaxed px-4 uppercase tracking-wide"></p>
             
-            <div class="w-full flex justify-between items-center bg-slate-50 p-5 rounded-[2rem]">
+            <div class="w-full flex justify-between items-center bg-black border border-[#c5a059]/20 p-6 rounded-[2.5rem] shadow-xl">
                 <div>
-                    <span class="text-[8px] font-black text-slate-400 uppercase tracking-widest block mb-0.5">Valor à Vista</span>
-                    <span id="modal-preco" class="text-xl font-black text-indigo-600 tracking-tighter"></span>
+                    <span class="text-[9px] font-black text-[#c5a059]/60 uppercase tracking-widest block mb-1">Cotação Elite</span>
+                    <span id="modal-preco" class="text-2xl font-black text-white tracking-tighter italic"></span>
                 </div>
-                <button id="modal-btn-add" class="bg-slate-900 text-white px-6 py-3 rounded-xl font-black uppercase text-[9px] tracking-widest hover:bg-indigo-600 transition-all">
+                <button id="modal-btn-add" class="bg-[#c5a059] text-black px-8 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-white transition-all shadow-lg shadow-[#c5a059]/20">
                     ADICIONAR
                 </button>
             </div>
@@ -1024,5 +1127,53 @@ function fecharModalProduto() {
     </div>
 </div>
 
+<div class="fixed bottom-6 left-0 w-full px-6 flex justify-between items-center z-[90] pointer-events-none">
+        
+        <button id="btn-subir" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+            class="pointer-events-auto w-12 h-12 bg-black border border-[#c5a059]/40 rounded-full text-[#c5a059] shadow-2xl flex items-center justify-center transition-all duration-500 opacity-0 scale-50 hover:bg-[#c5a059] hover:text-black">
+            <i class="fas fa-chevron-up"></i>
+        </button>
+
+        <a href="https://wa.me/5548999999999" target="_blank" 
+            class="pointer-events-auto w-14 h-14 bg-[#c5a059] text-black rounded-full shadow-[0_10px_30px_rgba(197,160,89,0.4)] flex items-center justify-center text-2xl transition-all duration-500 hover:scale-110 active:scale-95">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <script>
+        // Shark, Motor de visibilidade do botão subir
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('btn-subir');
+            if (window.scrollY > 400) {
+                btn.classList.remove('opacity-0', 'scale-50');
+                btn.classList.add('opacity-100', 'scale-100');
+            } else {
+                btn.classList.add('opacity-0', 'scale-50');
+                btn.classList.remove('opacity-100', 'scale-100');
+            }
+        });
+
+        // --- MOTOR DE UX MOBILE: BOTÃO VOLTAR (SHARK PERFORMANCE) ---
+
+// Shark, toda vez que abrir algo, a gente "finge" que mudou de página
+function registrarEstadoModal() {
+    history.pushState({ modalAberto: true }, "");
+}
+
+// Escuta o botão "Voltar" do celular
+window.onpopstate = function() {
+    // Se o usuário voltar, a gente fecha TUDO que for modal/gaveta
+    fecharSacola();
+    fecharModalProduto();
+    fecharModalTroca();
+    fecharVideoElite();
+    
+    // Fecha o menu lateral se estiver aberto
+    const sidebar = document.getElementById("sidebar-elite");
+    if (sidebar && !sidebar.classList.contains("-translate-x-full")) {
+        toggleMenuLateral();
+    }
+};
+    </script>
 </body>
 </html>

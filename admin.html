@@ -588,9 +588,9 @@
 
             if (!file) return;
 
-            // Shark, trava de segurança para não estourar o limite do D1 (1.5MB)
-            if (file.size > 1500000) {
-                alert("ERRO: Arquivo muito pesado! \n\nShark, envie o vídeo para o seu próprio WhatsApp e use o arquivo que o WhatsApp salvou. Ele vem comprimido e mantém a qualidade perfeita para o site.");
+           // Shark, limite máximo de 5MB para garantir que o site abra rápido no celular do cliente
+            if (file.size > 5000000) {
+                alert("ERRO CRÍTICO: Vídeo acima de 5MB! \n\nShark, esse vídeo é pesado demais e vai deixar o seu site lento. \n\nSOLUÇÃO ELITE: Use o site 'VideoSmaller.com', selecione o vídeo e clique em 'Upload Video'. Ele vai reduzir o tamanho sem perder a qualidade Apple. Depois, tente subir aqui de novo!");
                 event.target.value = "";
                 return;
             }

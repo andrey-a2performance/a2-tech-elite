@@ -45,7 +45,7 @@ export default {
         }
       }
 
-      // ROTA: CONFIGURAÇÕES (SISTEMA ELITE COM ON CONFLICT)
+      // ROTA: CONFIGURAÇÕES
       if (pathname.startsWith("/config")) {
         if (request.method === "GET") {
           const result = await env.DB.prepare("SELECT * FROM configuracoes WHERE id = 1").first();
@@ -75,6 +75,24 @@ export default {
           const b = await request.json();
           await env.DB.prepare("INSERT INTO banners (imagem_url, ordem) VALUES (?, ?)").bind(b.imagem_url, b.ordem).run();
           return new Response("Banner Salvo", { headers: corsHeaders });
+        }
+      }
+
+      // ROTA: VÍDEOS TECH (ELITE REELS)
+      if (pathname === "/videos-tech") {
+        if (request.method === "GET") {
+          const { results } = await env.DB.prepare("SELECT * FROM videos_tech ORDER BY id DESC").all();
+          return new Response(JSON.stringify(results), { headers: corsHeaders });
+        }
+        if (request.method === "POST") {
+          const v = await request.json();
+          await env.DB.prepare("INSERT INTO videos_tech (titulo, video_url) VALUES (?, ?)").bind(v.titulo, v.video_url).run();
+          return new Response("Vídeo Salvo", { headers: corsHeaders });
+        }
+        if (request.method === "DELETE") {
+          const { id } = await request.json();
+          await env.DB.prepare("DELETE FROM videos_tech WHERE id = ?").bind(id).run();
+          return new Response("Vídeo Removido", { headers: corsHeaders });
         }
       }
 
